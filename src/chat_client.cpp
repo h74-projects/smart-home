@@ -127,20 +127,20 @@ private:
   chat_message_queue write_msgs_;
 };
 
-int main()
+int main(int argc, char* argv[])
 {
   try
   {
-    // if (argc != 3)
-    // {
-    //   std::cerr << "Usage: chat_client <host> <port>\n";
-    //   return 1;
-    // }
+    if (argc != 2)
+    {
+      std::cerr << "Usage: chat_client <host> <port>\n";
+      return 1;
+    }
 
     boost::asio::io_context io_context;
 
     tcp::resolver resolver(io_context);
-    auto endpoints = resolver.resolve("", "3001");
+    auto endpoints = resolver.resolve("", argv[1]);
     chat_client c(io_context, endpoints);
 
     std::thread t([&io_context](){ io_context.run(); });
