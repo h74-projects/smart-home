@@ -34,7 +34,7 @@ void Session::do_read_header()
     auto self(shared_from_this());
     boost::asio::async_read(m_socket, boost::asio::buffer(m_read_msg.data(), sb::header_length), 
         [this, self](boost::system::error_code ec, std::size_t /*length*/){ //length comment
-            if (!ec && m_read_msg.decode_header()){
+            if (!ec && m_read_msg.check_packet_length()){
                 do_read_body();
             }else {
                 m_subscribtion.leave(shared_from_this());

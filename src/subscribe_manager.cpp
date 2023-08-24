@@ -1,5 +1,7 @@
 #include "subscribe_manager.hpp"
 
+#include <iostream>
+
 namespace sb {
 
 void SubscribeManager::join(SubscriberPtr a_subscriber)
@@ -16,7 +18,8 @@ void SubscribeManager::deliver(Protocol const& a_event) // TODO: change to "get_
                                                         // events (???).
 {
     m_recent_events.push_back(a_event);
-
+    std::cout << a_event.event_type() << "\n";
+    std::cout << a_event.event_location() << "\n";
     for (auto subscriber : m_subscriber_clan)
         subscriber.second->deliver(a_event);
 }

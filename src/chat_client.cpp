@@ -1,47 +1,37 @@
-//
-// chat_client.cpp
-// ~~~~~~~~~~~~~~~
-//
-// Copyright (c) 2003-2023 Christopher M. Kohlhoff (chris at kohlhoff dot com)
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
+#include "chat_message.hpp"
+
+#include "event.hpp"
+
+#include <boost/asio.hpp>
 
 #include <cstdlib>
 #include <deque>
 #include <iostream>
 #include <thread>
-#include <boost/asio.hpp>
-#include "chat_message.hpp"
 
 using boost::asio::ip::tcp;
 
 typedef std::deque<chat_message> chat_message_queue;
 
-class chat_client
-{
+class chat_client {
 public:
-  chat_client(boost::asio::io_context& io_context,
-      const tcp::resolver::results_type& endpoints)
-    : io_context_(io_context),
-      socket_(io_context)
+  chat_client(boost::asio::io_context& io_context, const tcp::resolver::results_type& endpoints)
+  : io_context_(io_context)
+  , socket_(io_context)
   {
     do_connect(endpoints);
   }
 
   void write(const chat_message& msg)
   {
-    boost::asio::post(io_context_,
-        [this, msg]()
-        {
-          bool write_in_progress = !write_msgs_.empty();
-          write_msgs_.push_back(msg);
-          if (!write_in_progress)
-          {
-            do_write();
-          }
-        });
+    boost::asio::post(io_context_, [this, msg](){
+    bool write_in_progress = !write_msgs_.empty();
+    write_msgs_.push_back(msg);
+    if (!write_in_progress)
+    {
+    do_write();
+    }
+  });
   }
 
   void close()
@@ -145,12 +135,17 @@ int main(int argc, char* argv[])
 
     std::thread t([&io_context](){ io_context.run(); });
 
-    char line[chat_message::max_body_length + 1];
-    while (std::cin.getline(line, chat_message::max_body_length + 1))
+    // char line[chat_message::max_body_length + 1];
+    std::string line;
+    while (std::getline(std::cin, line))
     {
+      sb::Event e("room_1", "NOISE");
+      e.event_warper(line);
+
+
       chat_message msg;
-      msg.body_length(std::strlen(line));
-      std::memcpy(msg.body(), line, msg.body_length());
+      msg.body_length(line.size());
+      std::memcpy(msg.body(), line.c_str(), msg.body_length());
       msg.encode_header();
       c.write(msg);
     }
