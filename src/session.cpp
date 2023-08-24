@@ -1,6 +1,5 @@
 #include "session.hpp"
 
-// static constexpr std::size_t header_length = 4; //TODO move to const header file
 
 namespace sb {
 
@@ -33,7 +32,7 @@ void Session::deliver(Protocol const& a_msg)
 void Session::do_read_header()
 {
     auto self(shared_from_this());
-    boost::asio::async_read(m_socket, boost::asio::buffer(m_read_msg.data(), 20), 
+    boost::asio::async_read(m_socket, boost::asio::buffer(m_read_msg.data(), sb::header_length), 
         [this, self](boost::system::error_code ec, std::size_t /*length*/){ //length comment
             if (!ec && m_read_msg.decode_header()){
                 do_read_body();
@@ -66,7 +65,7 @@ void Session::do_write()
         {
             if (!ec) {
                 m_write_msgs.pop_front();
-            if (!m_write_msgs.empty()) { //change this if to elseif?
+            if (!m_write_msgs.empty()) { // change this if to elseif?
                 do_write();
             }
             } else {
