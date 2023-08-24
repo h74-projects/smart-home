@@ -1,12 +1,12 @@
 #include "protocol.hpp"
 
-#include <cstdio>
+#include <cstdio> //sprintf
 #include <cstdlib> //size_t
-#include <cstring>
+#include <cstring> //strncat
 
 namespace sb {
 
-Protocol::Protocol()
+Protocol::Protocol() noexcept
 : m_body_length(0)
 {
 }
