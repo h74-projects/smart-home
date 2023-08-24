@@ -49,10 +49,10 @@ void Protocol::body_length(std::size_t new_length)
     }
 }
 
-bool Protocol::decode_header()
+bool Protocol::check_packet_length() //limit the packet length
 {
     char header[header_length + 1] = "";
-    std::strncat(header, m_data, header_length);//change implemnt?
+    std::strncat(header, m_data, header_length);
     m_body_length = std::atoi(header);
     if (m_body_length > max_body_length){
         m_body_length = 0;

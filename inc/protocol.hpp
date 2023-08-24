@@ -13,13 +13,13 @@ static constexpr std::size_t max_body_length = 512;
 
 class Protocol {
 public:
-    Protocol();
+    Protocol() noexcept;
 
     ~Protocol() noexcept = default;
-    // Protocol(Protocol const& a_other);
-    // Protocol(Protocol&& a_other);
-    // Protocol& operator=(Protocol const& a_other);
-    // Protocol& operator=(Protocol&& a_other);
+    Protocol(Protocol const& a_other) = default;
+    Protocol(Protocol&& a_other) = default;
+    Protocol& operator=(Protocol const& a_other) = default;
+    Protocol& operator=(Protocol&& a_other) = default;
 
     const char* data() const;
     char* data();
@@ -29,12 +29,12 @@ public:
     std::size_t body_length() const;
     void body_length(std::size_t new_length);
     void encode_header();
-    bool decode_header();
+    bool check_packet_length();
 
 
 private:
     char m_data[header_length + max_body_length];
-    std::size_t m_body_length; //size_t??
+    std::size_t m_body_length; 
 };
 
 }//namespace sb
