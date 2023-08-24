@@ -13,7 +13,7 @@ Protocol::Protocol() noexcept
 {
 }
 
-const char* Protocol::data() const //replace with &
+const char* Protocol::data() const 
 {
     return m_data;
 }
