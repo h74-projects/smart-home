@@ -31,6 +31,9 @@ public:
     void encode_header();
     bool check_packet_length();
 
+    std::string event_type() const;
+    std::string event_location() const;
+
 
 private:
     char m_data[header_length + max_body_length];
