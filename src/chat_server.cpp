@@ -43,8 +43,6 @@ public:
   void join(chat_participant_ptr participant)
   {
     participants_.insert(participant);
-    for (auto msg: recent_msgs_)
-      participant->deliver(msg);
   }
 
   void leave(chat_participant_ptr participant)
@@ -70,21 +68,25 @@ private:
 
 //----------------------------------------------------------------------
 
-class chat_session
-  : public chat_participant,
+class chat_session : public chat_participant,
     public std::enable_shared_from_this<chat_session>
 {
 public:
-  chat_session(tcp::socket socket, chat_room& room)
-    : socket_(std::move(socket)),
-      room_(room)
+  chat_session(tcp::socket socket, chat_room& room, bool a_type)
+    : socket_(std::move(socket))
+    , room_(room)
+    , m_type(a_type)
   {
   }
 
   void start()
   {
-    room_.join(shared_from_this());
-    do_read_header();
+    if(m_type){
+       do_read_header();
+    }else {
+      room_.join(shared_from_this());
+      do_read_header();
+    }
   }
 
   void deliver(const chat_message& msg)
@@ -162,6 +164,7 @@ private:
   chat_room& room_;
   chat_message read_msg_;
   chat_message_queue write_msgs_;
+  bool m_type;
 };
 
 //----------------------------------------------------------------------
@@ -170,8 +173,9 @@ class chat_server
 {
 public:
   chat_server(boost::asio::io_context& io_context,
-      const tcp::endpoint& endpoint)
-    : acceptor_(io_context, endpoint)
+      const tcp::endpoint& endpoint1, const tcp::endpoint& endpoint2)
+    : acceptor_1(io_context, endpoint1)
+    , acceptor_2(io_context, endpoint2)
   {
     do_accept();
   }
@@ -179,42 +183,55 @@ public:
 private:
   void do_accept()
   {
-    acceptor_.async_accept(
+    acceptor_1.async_accept(
         [this](boost::system::error_code ec, tcp::socket socket)
         {
           if (!ec)
           {
-            std::make_shared<chat_session>(std::move(socket), room_)->start();
+            std::make_shared<chat_session>(std::move(socket), room_, true)->start();
           }
 
-          do_accept();
+          do_accept();  
         });
+    std::cout << "sahar\n";
+    acceptor_2.async_accept(
+    [this](boost::system::error_code ec, tcp::socket socket)
+    {
+      if (!ec)
+      {
+        std::make_shared<chat_session>(std::move(socket), room_, false)->start();
+      }
+
+      do_accept();
+    });
   }
 
-  tcp::acceptor acceptor_;
+  tcp::acceptor acceptor_1;
+  tcp::acceptor acceptor_2;
   chat_room room_;
 };
 
 //----------------------------------------------------------------------
 
-int main(int argc, char* argv[])
+int main()
 {
   try
   {
-    if (argc < 2)
-    {
-      std::cerr << "Usage: chat_server <port> [<port> ...]\n";
-      return 1;
-    }
+    // if (argc < 2)
+    // {
+    //   std::cerr << "Usage: chat_server <port> [<port> ...]\n";
+    //   return 1;
+    // }
 
     boost::asio::io_context io_context;
 
     std::list<chat_server> servers;
-    for (int i = 1; i < argc; ++i)
-    {
-      tcp::endpoint endpoint(tcp::v4(), std::atoi(argv[i]));
-      servers.emplace_back(io_context, endpoint);
-    }
+    // for (int i = 1; i < argc; ++i)
+    // {
+    tcp::endpoint endpoint1(tcp::v4(), 7070); //sensor ->true
+    tcp::endpoint endpoint2(tcp::v4(), 8080); // controler -> false
+    servers.emplace_back(io_context, endpoint1, endpoint2);
+    // }
 
     io_context.run();
   }

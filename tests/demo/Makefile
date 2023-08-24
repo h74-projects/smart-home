@@ -14,27 +14,19 @@ LDLIBS += -lpthread
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-TARGET = utest                     
-OBJECTS = utest.o
-
-SERVER_TARGET = $(SOURCES_DIR)/chat_server                     
-SERVER_OBJECTS = $(SOURCES_DIR)/chat_server.o
-
-CLIENT_TARGET = $(SOURCES_DIR)/chat_client                     
+TARGET = main     
+                   
+OBJECTS = main.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/session.o $(SOURCES_DIR)/protocol.o\
+			$(SOURCES_DIR)/subscriber.o $(SOURCES_DIR)/subscribe_manager.o
+                    
 CLIENT_OBJECTS = $(SOURCES_DIR)/chat_client.o
 
 $(TARGET) : $(OBJECTS)
-
-$(SERVER_TARGET) : $(SERVER_OBJECTS)
 
 $(CLIENT_TARGET) : $(CLIENT_OBJECTS)
 
 new_client: $(CLIENT_TARGET)
 	@$(CLIENT_TARGET) -v
-
-new_server: $(SERVER_TARGET)
-	@$(SERVER_TARGET) 3001 -v
-
 
 check : $(TARGET)
 	@./$(TARGET) -v
@@ -45,7 +37,7 @@ clean:
 	@$(RM) $(TARGET) $(OBJECTS)
 
 val: $(TARGET)
-	valgrind --leak-check=yes -s -q ./utest
+	valgrind --leak-check=yes -s -q ./main
 
 hell: $(TARGET)
 	valgrind --tool=helgrind --max-threads=500 -s ./$(TARGET) 2> hell.log
@@ -55,4 +47,11 @@ hell: $(TARGET)
 
 # dependencies
 $(SOURCES_DIR)/chat_client.o: $(INCLUDES_DIR)/chat_message.hpp
-$(SOURCES_DIR)/chat_server.o: $(INCLUDES_DIR)/chat_message.hpp
+$(SOURCES_DIR)/server.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/session.hpp 
+$(SOURCES_DIR)/session.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/subscriber.hpp 
+$(SOURCES_DIR)/protocol.o:  
+$(SOURCES_DIR)/subscriber.o: $(INCLUDES_DIR)/protocol.hpp  
+$(SOURCES_DIR)/subscribe_manager.o: $(INCLUDES_DIR)/subscriber.hpp $(INCLUDES_DIR)/protocol.hpp
+main.o: $(INCLUDES_DIR)/server.hpp
+
+
