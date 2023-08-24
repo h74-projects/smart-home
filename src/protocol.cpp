@@ -68,8 +68,4 @@ void Protocol::encode_header()
     std::memcpy(m_data, header, header_length);
 }
 
-
-  
-
-
 }// namespace sb

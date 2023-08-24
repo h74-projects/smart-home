@@ -16,15 +16,15 @@ void Server::do_accept() //TODO split lambda to handler func
 {
     m_sensor_acceptor.async_accept([this](boost::system::error_code ec, tcp::socket socket){
         if (!ec){
-        std::make_shared<Session>(std::move(socket), m_subscribe_manager, true)->start();
-        }
+            std::make_shared<Session>(std::move(socket), m_subscribe_manager, true)->start();
+        }//sensor state
 
         do_accept();});
 
     m_controler_acceptor.async_accept([this](boost::system::error_code ec, tcp::socket socket){
         if (!ec){
-        std::make_shared<Session>(std::move(socket), m_subscribe_manager, false)->start();
-        }
+            std::make_shared<Session>(std::move(socket), m_subscribe_manager, false)->start();
+        }//controller state
 
         do_accept(); });
 }
