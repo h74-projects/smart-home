@@ -29,6 +29,8 @@ public:
 
     void start();
     void deliver(Protocol const& a_msg) override;
+    void subscribe();
+    void recieve_subscribe();
 
 private:
     void parse_event();
@@ -37,9 +39,10 @@ private:
 
 private:
     tcp::socket m_socket;
-    SubscribeManager& m_subscription;
+    SubscribeManager& m_subscription_manager;
     Protocol m_incoming_event;
     event_queue m_events;
+    std::vector<int> m_subscription;
     bool m_type;
 };
 
