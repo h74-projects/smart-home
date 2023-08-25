@@ -33,7 +33,7 @@ void Session::recieve()
     auto self(shared_from_this());
     boost::asio::async_read(m_socket, boost::asio::buffer(m_incoming_event.data(), sb::header_length), 
         [this, self](boost::system::error_code ec, std::size_t /*length*/){ //length comment
-            if (!ec && m_incoming_event.decode_header()){
+            if (!ec && m_incoming_event.check_packet_length()){
                 parse_event();
             }else {
                 m_subscription.leave(shared_from_this());

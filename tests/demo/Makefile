@@ -20,14 +20,22 @@ OBJECTS = main.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/session.o $(SOURCES_DIR)
 			$(SOURCES_DIR)/subscriber.o $(SOURCES_DIR)/subscribe_manager.o $(SOURCES_DIR)/event.o
 			
 CLIENT_TARGET = $(SOURCES_DIR)/chat_client                      
-CLIENT_OBJECTS = $(SOURCES_DIR)/chat_client.o $(SOURCES_DIR)/event.o
+CLIENT_OBJECTS = $(SOURCES_DIR)/chat_client.o $(SOURCES_DIR)/event.o $(SOURCES_DIR)/udp.server.o
+
+AGENT_CONTROLER_TARGET = $(SOURCES_DIR)/agent_controler                      
+AGENT_CONTROLER_OBJECTS = $(SOURCES_DIR)/agent_controler.o $(SOURCES_DIR)/event.o 
 
 $(TARGET) : $(OBJECTS)
 
 $(CLIENT_TARGET) : $(CLIENT_OBJECTS)
 
+$(AGENT_CONTROLER_TARGET) : $(AGENT_CONTROLER_OBJECTS)
+
 new_client: $(CLIENT_TARGET)
 	@$(CLIENT_TARGET) -v 
+
+new_agent_controler: $(AGENT_CONTROLER_TARGET)
+	@$(AGENT_CONTROLER_TARGET) -v 
 
 check : $(TARGET)
 	@./$(TARGET) -v
@@ -37,6 +45,7 @@ recheck: clean check
 clean:
 	@$(RM) $(TARGET) $(OBJECTS)
 	@$(RM) $(CLIENT_TARGET) $(CLIENT_OBJECTS)
+	@$(RM) $(AGENT_CONTROLER_TARGET) $(AGENT_CONTROLER_OBJECTS)
 
 val: $(TARGET)
 	valgrind --leak-check=yes -s -q ./main
@@ -48,8 +57,10 @@ hell: $(TARGET)
 
 
 # dependencies
-$(SOURCES_DIR)/chat_client.o: $(INCLUDES_DIR)/chat_message.hpp $(INCLUDES_DIR)/event.hpp
+$(SOURCES_DIR)/chat_client.o: $(INCLUDES_DIR)/chat_message.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/udp.server.hpp
+$(SOURCES_DIR)/agent_controler.o: $(INCLUDES_DIR)/chat_message.hpp $(INCLUDES_DIR)/event.hpp 
 $(SOURCES_DIR)/event.o: 
+$(SOURCES_DIR)/udp.server.o: 
 $(SOURCES_DIR)/server.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/session.hpp 
 $(SOURCES_DIR)/session.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/subscriber.hpp 
 $(SOURCES_DIR)/protocol.o:  
