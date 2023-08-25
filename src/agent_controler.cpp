@@ -135,9 +135,6 @@ int main(int argc, char* argv[])
     // boost::asio::io_context io_context_udp;
     
     
-    // boost::asio::io_context io_context_udp;
-
-    // sb::UdpListner ul(io_context_udp, 9090);
     
 
 
@@ -157,7 +154,6 @@ int main(int argc, char* argv[])
     while (std::getline(std::cin, line))
     {
       // line = "42";
-      // line = ul.receive_data();
       sb::Event e("room_1", "NOISE");
       e.event_warper(line);
 
