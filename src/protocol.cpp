@@ -1,7 +1,6 @@
 #include "protocol.hpp"
 
 #include <cstdio> //sprintf
-#include <cstdlib> //size_t
 #include <cstring> //strncat
 #include <iostream> //strncat
 #include <sstream> //strncat
@@ -75,7 +74,6 @@ std::string Protocol::event_type() const
     std::string event_string(this->data());
     size_t found = event_string.find_last_of(' ');
     event_string = event_string.substr(found + 1);
-    std::cout << event_string << "\n";
     return event_string;
 }
 
@@ -87,7 +85,6 @@ std::string Protocol::event_location() const
     for(size_t i = 0; i < 2; ++i){
         ss << event_string;
         ss >> location;
-        std::cout << location << "\n";
     }
     return location;
 }

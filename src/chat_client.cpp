@@ -123,9 +123,9 @@ int main(int argc, char* argv[])
 {
   try
   {
-    if (argc != 2)
+    if (argc != 3)
     {
-      std::cerr << "Usage: chat_client <host> <port>\n";
+      std::cerr << "Usage: chat_client <port> <type>\n";
       return 1;
     }
     boost::asio::io_context io_context;
@@ -150,8 +150,14 @@ int main(int argc, char* argv[])
     chat_client c(io_context, endpoints);
 
     std::thread t([&io_context](){ io_context.run(); });
+    std::string port = argv[1];
+    std::string type = argv[2];
 
     // char line[chat_message::max_body_length + 1];
+<<<<<<< HEAD
+    if (port == "7070") {
+      std::string line;
+=======
     std::string line;
     std::this_thread::sleep_for(std::chrono::seconds(2)); //give time to connect happen
     while (std::getline(std::cin, line))
@@ -160,13 +166,35 @@ int main(int argc, char* argv[])
       // line = ul.receive_data();
       sb::Event e("room_1", "NOISE");
       e.event_warper(line);
+>>>>>>> c6fca0d59f096babcf8e6fa7559a97e064e98a2f
 
+      while (std::getline(std::cin, line))
+      {
+        sb::Event e("room_1", type);
+        e.event_warper(line);
+
+        chat_message msg;
+        msg.body_length(line.size());
+        std::memcpy(msg.body(), line.c_str(), msg.body_length());
+        msg.encode_header();
+        c.write(msg);
+      }
+    }
+
+    if (port == "8080") {
+      std::string line = "x";
+
+      sb::Event e("subscribe", type);
+      e.event_warper(line);
 
       chat_message msg;
       msg.body_length(line.size());
       std::memcpy(msg.body(), line.c_str(), msg.body_length());
       msg.encode_header();
+      std::this_thread::sleep_for(std::chrono::seconds(1));
       c.write(msg);
+
+      while(true);
     }
 
     c.close();

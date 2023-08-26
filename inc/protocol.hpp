@@ -34,7 +34,6 @@ public:
     std::string event_type() const;
     std::string event_location() const;
 
-
 private:
     char m_data[header_length + max_body_length];
     std::size_t m_body_length; 

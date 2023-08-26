@@ -27,15 +27,14 @@ public:
     // SubscribeManager& operator=(SubscribeManager const& a_other);
     // SubscribeManager& operator=(SubscribeManager&& a_other);
 
-    void join(SubscriberPtr a_subscriber);
+    void join(SubscriberPtr a_subscriber, Protocol const& a_event);
     void leave(SubscriberPtr a_subscriber);
     void deliver(Protocol const& a_event);
 
 private:
-    std::map<int, SubscriberPtr> m_subscriber_clan;
+    std::map<std::string, std::vector<SubscriberPtr>> m_subscriber_clan;
     enum { max_recent_msgs = 100 }; //replace
     ProtocolQueue m_recent_events;
-
 };
 
 }//namespace sb

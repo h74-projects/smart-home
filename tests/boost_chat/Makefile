@@ -21,7 +21,7 @@ SERVER_TARGET = $(SOURCES_DIR)/chat_server
 SERVER_OBJECTS = $(SOURCES_DIR)/chat_server.o
 
 CLIENT_TARGET = $(SOURCES_DIR)/chat_client                     
-CLIENT_OBJECTS = $(SOURCES_DIR)/chat_client.o
+CLIENT_OBJECTS = $(SOURCES_DIR)/chat_client.o $(SOURCES_DIR)/event.o
 
 $(TARGET) : $(OBJECTS)
 
@@ -54,5 +54,5 @@ hell: $(TARGET)
 
 
 # dependencies
-$(SOURCES_DIR)/chat_client.o: $(INCLUDES_DIR)/chat_message.hpp
+$(SOURCES_DIR)/chat_client.o: $(INCLUDES_DIR)/chat_message.hpp $(INCLUDES_DIR)/event.hpp
 $(SOURCES_DIR)/chat_server.o: $(INCLUDES_DIR)/chat_message.hpp
