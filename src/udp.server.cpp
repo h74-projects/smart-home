@@ -57,13 +57,15 @@ private:
 
 };
 
+}// namespace sb
+
 int main()
 {
   try
   {
     boost::asio::io_context io_context;
 
-    UdpListner ul(io_context, 9090);
+    sb::UdpListner ul(io_context, 9090);
     ul.receive_data();
   }
 catch (std::exception& e)
@@ -72,4 +74,3 @@ catch (std::exception& e)
   }
 }
 
-}// namespace sb
