@@ -7,6 +7,8 @@
 
 using boost::asio::ip::udp;
 
+namespace sb {
+
 enum { max_length = 1024 }; 
 
 class UdpListner {
@@ -55,8 +57,6 @@ private:
 
 };
 
-
-
 int main()
 {
   try
@@ -70,6 +70,6 @@ catch (std::exception& e)
   {
     std::cerr << "Exception: " << e.what() << "\n";
   }
-
-  return 0;
 }
+
+}// namespace sb

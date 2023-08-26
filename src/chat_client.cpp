@@ -9,9 +9,7 @@ int main(int argc, char* argv[])
       std::cerr << "Usage: chat_client <port> <type>\n";
       return 1;
     }
-
     boost::asio::io_context io_context;
-
     tcp::resolver resolver(io_context);
     auto endpoints = resolver.resolve("", argv[1]);
     sb::Client c(io_context, endpoints);
