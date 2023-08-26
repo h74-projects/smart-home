@@ -15,10 +15,10 @@ INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
 SERVER_TARGET = $(SOURCES_DIR)/udp.server                  
-SERVER_OBJECTS = $(SOURCES_DIR)/udp.server.o
+SERVER_OBJECTS = $(SOURCES_DIR)/udp.server.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o
 
 CLIENT_TARGET = $(SOURCES_DIR)/udp.client                     
-CLIENT_OBJECTS = $(SOURCES_DIR)/udp.client.o
+CLIENT_OBJECTS = $(SOURCES_DIR)/udp.client.o 
 
 $(SERVER_TARGET) : $(SERVER_OBJECTS)
 
@@ -50,3 +50,5 @@ hell: $(TARGET)
 
 
 # dependencies
+$(SOURCES_DIR)/client.o: $(INCLUDES_DIR)/client.hpp $(INCLUDES_DIR)/chat_message.hpp
+$(SOURCES_DIR)/event.o: $(INCLUDES_DIR)/event.hpp
