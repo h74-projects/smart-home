@@ -41,7 +41,7 @@ void UdpListner::receive_data()
         sb::Event e("room_1", type);
         e.event_warper(event);
 
-        Protocol msg;
+        sb::Protocol msg;
         msg.body_length(event.size());
         std::memcpy(msg.body(), event.c_str(), msg.body_length());
         msg.encode_header();
