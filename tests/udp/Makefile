@@ -17,15 +17,15 @@ SOURCES_DIR = ../../src
 SERVER_TARGET = $(SOURCES_DIR)/udp.server                  
 SERVER_OBJECTS = $(SOURCES_DIR)/udp.server.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o
 
-CLIENT_TARGET = $(SOURCES_DIR)/udp.client                     
-CLIENT_OBJECTS = $(SOURCES_DIR)/udp.client.o 
+SENSOR_TARGET = $(SOURCES_DIR)/udp_sensor                    
+SENSOR_OBJECTS = $(SOURCES_DIR)/udp_sensor.o 
 
 $(SERVER_TARGET) : $(SERVER_OBJECTS)
 
-$(CLIENT_TARGET) : $(CLIENT_OBJECTS)
+$(SENSOR_TARGET) : $(SENSOR_OBJECTS)
 
-new_client: $(CLIENT_TARGET)
-	@$(CLIENT_TARGET) -v
+udp_sensor: $(SENSOR_TARGET)
+	@$(SENSOR_TARGET) -v
 
 new_server: $(SERVER_TARGET)
 	@$(SERVER_TARGET) -v
@@ -38,7 +38,7 @@ recheck: clean check
 clean:
 	@$(RM) $(TARGET) $(OBJECTS)
 	@$(RM) $(SERVER_TARGET) $(SERVER_OBJECTS)
-	@$(RM) $(CLIENT_TARGET) $(CLIENT_OBJECTS)
+	@$(RM) $(SENSOR_TARGET) $(SENSOR_OBJECTS)
 
 val: $(TARGET)
 	valgrind --leak-check=yes -s -q ./utest
