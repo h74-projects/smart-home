@@ -5,13 +5,13 @@
 
 #include <boost/asio.hpp>
 
-using boost::asio::ip::udp;
+using boost::asio::ip::tcp;
 
 namespace sb {
 
 class AgentTempature {
 public: 
-    AgentTempature(unsigned short port);
+    AgentTempature();
 
     ~AgentTempature() noexcept = default;
     AgentTempature(AgentTempature const& a_other) = default;
@@ -20,10 +20,9 @@ public:
     AgentTempature& operator=(AgentTempature&& a_other) = default;
 
     void wraper(Protocol& a_data, Protocol& a_event);
-
+    tcp::endpoint endpoint() const;
 private:
-    unsigned short m_port;
-
+    tcp::endpoint m_endpoint;
 };
 
 }//namespace sb

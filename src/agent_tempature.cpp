@@ -6,8 +6,8 @@
 
 namespace sb {
 
-AgentTempature::AgentTempature(unsigned short a_port)
-: m_port(a_port)
+AgentTempature::AgentTempature()
+: m_endpoint(tcp::v4(), 7070)
 {
 }
 
@@ -25,6 +25,11 @@ void AgentTempature::wraper(Protocol& a_data, Protocol& a_event)
         a_event.body_length(event.size());
         std::memcpy(a_event.body(), event.c_str(), a_event.body_length());
         a_event.encode_header();
+}
+
+tcp::endpoint AgentTempature::endpoint() const
+{
+	return m_endpoint;
 }
 
 }// amespace sb
