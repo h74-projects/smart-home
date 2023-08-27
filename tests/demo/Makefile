@@ -51,7 +51,7 @@ hell: $(TARGET)
 
 # dependencies
 $(SOURCES_DIR)/event.o: $(INCLUDES_DIR)/event.hpp
-$(SOURCES_DIR)/server.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/session.hpp 
+$(SOURCES_DIR)/server.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/session.hpp $(INCLUDES_DIR)/agent_tempature.hpp
 $(SOURCES_DIR)/session.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/subscriber.hpp\
 						  $(INCLUDES_DIR)/agent_tempature.hpp	
 $(SOURCES_DIR)/protocol.o: $(INCLUDES_DIR)/protocol.hpp
@@ -59,6 +59,6 @@ $(SOURCES_DIR)/subscriber.o: $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/subscribe_manager.o: $(INCLUDES_DIR)/subscriber.hpp $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/client.o: $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/agent_tempature.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp
-main.o: $(INCLUDES_DIR)/server.hpp 
+main.o: $(INCLUDES_DIR)/server.hpp
 
 

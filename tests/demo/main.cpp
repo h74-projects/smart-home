@@ -13,12 +13,12 @@ int main()
 {
     try{
         
-        AgentTempature at(7070);
+        sb::AgentTempature at;
 
         boost::asio::io_context io_context;
-        // tcp::endpoint endpoint1(tcp::v4(), 7070); //sensor ->true
-        tcp::endpoint endpoint2(tcp::v4(), 8080); // controler -> false
-        sb::Server s(io_context, endpoint1, at);
+        tcp::endpoint controler_endpoint(tcp::v4(), 8080); // controler -> false
+        tcp::endpoint sensor_endpoint(at.endpoint());
+        sb::Server s(io_context, sensor_endpoint, controler_endpoint, at);
 
         io_context.run();
         

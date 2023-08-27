@@ -71,7 +71,7 @@ void Protocol::encode_header()
 
 std::string Protocol::event_type() const
 {
-    std::string event_string(this->data());
+    std::string event_string(this->data(), this->length());
     size_t found = event_string.find_last_of(' ');
     event_string = event_string.substr(found + 1);
     return event_string;
