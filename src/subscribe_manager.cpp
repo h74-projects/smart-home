@@ -13,7 +13,7 @@ void SubscribeManager::join(SubscriberPtr a_subscriber, Protocol const& a_event)
     }
 }
 
-void SubscribeManager::leave(SubscriberPtr a_subscriber) 
+void SubscribeManager::leave(SubscriberPtr a_subscriber) //check if not end
 {
     for (auto type_subscribers : m_subscriber_clan) {
         type_subscribers.second.erase(std::find(type_subscribers.second.begin(), type_subscribers.second.end(), a_subscriber));
