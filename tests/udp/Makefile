@@ -18,7 +18,7 @@ AGENT_SENSOR_TARGET = $(SOURCES_DIR)/udp_agent
 AGENT_SENSOR_OBJECTS = $(SOURCES_DIR)/udp_agent.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o $(SOURCES_DIR)/protocol.o 
 
 SENSOR_TARGET = $(SOURCES_DIR)/udp_sensor                    
-SENSOR_OBJECTS = $(SOURCES_DIR)/udp_sensor.o 
+SENSOR_OBJECTS = $(SOURCES_DIR)/udp_sensor.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/protocol.o
 
 $(AGENT_SENSOR_TARGET) : $(AGENT_SENSOR_OBJECTS)
 
@@ -51,5 +51,5 @@ hell: $(AGENT_SENSOR_TARGET) $(SENSOR_TARGET)
 # dependencies
 $(SOURCES_DIR)/client.o: $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/protocol.o: $(INCLUDES_DIR)/protocol.hpp 
-$(SOURCES_DIR)/.o: $(INCLUDES_DIR)/event.hpp
+$(SOURCES_DIR)/event.o: $(INCLUDES_DIR)/event.hpp
 $(SOURCES_DIR)/udp_agent.o: $(INCLUDES_DIR)/client.hpp $(INCLUDES_DIR)/event.hpp

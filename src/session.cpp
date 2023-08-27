@@ -1,5 +1,7 @@
 #include "session.hpp"
 
+#include "agent_tempature.hpp"
+
 namespace sb {
 
 Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager, bool a_type)
@@ -77,7 +79,11 @@ void Session::parse_event()
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
             if (!ec){
-                m_subscription_manager.deliver(m_incoming_event);
+
+                Protocol event;
+                AgentTempature at(1234);
+                at.wraper(m_incoming_event, event);
+                m_subscription_manager.deliver(event);
                 recieve();
             }else {
                 m_subscription_manager.leave(shared_from_this());
