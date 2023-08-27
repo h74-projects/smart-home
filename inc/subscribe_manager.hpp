@@ -33,7 +33,6 @@ public:
 
 private:
     std::map<std::string, std::vector<SubscriberPtr>> m_subscriber_clan;
-    enum { max_recent_msgs = 100 }; //replace
     ProtocolQueue m_recent_events;
 };
 

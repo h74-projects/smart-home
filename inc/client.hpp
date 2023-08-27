@@ -1,7 +1,7 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
-#include "chat_message.hpp"
+#include "protocol.hpp"
 #include "event.hpp"
 
 #include <boost/asio.hpp>
@@ -12,15 +12,15 @@
 
 using boost::asio::ip::tcp;
 
-typedef std::deque<chat_message> chat_message_queue;
-
 namespace sb {
+
+typedef std::deque<Protocol> Events;
 
 class Client {
 public:
   Client(boost::asio::io_context& io_context, const tcp::resolver::results_type& endpoints);
 
-  void write(const chat_message& msg);
+  void write(const Protocol& msg);
   void close();
 
 private:
@@ -30,10 +30,10 @@ private:
   void do_write();
   
 private:
-  boost::asio::io_context& io_context_;
-  tcp::socket socket_;
-  chat_message read_msg_;
-  chat_message_queue write_msgs_;
+  boost::asio::io_context& m_io_context;
+  tcp::socket m_socket;
+  Protocol m_read_event;
+  Events m_events;
 };
 
 } // namespcae sb
