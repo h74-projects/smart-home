@@ -43,6 +43,8 @@ recheck: clean check
 
 clean:
 	@$(RM) $(TARGET) $(OBJECTS)
+	@$(RM) $(SERVER_TARGET) $(SERVER_OBJECTS)
+	@$(RM) $(CLIENT_TARGET) $(CLIENT_OBJECTS)
 
 val: $(TARGET)
 	valgrind --leak-check=yes -s -q ./utest
