@@ -30,6 +30,7 @@ public:
     void body_length(std::size_t new_length);
     void encode_header();
     bool check_packet_length();
+    std::string id();
 
     std::string event_type() const;
     std::string event_location() const;

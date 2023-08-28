@@ -7,6 +7,8 @@
 
 namespace sb {
 
+static constexpr std::size_t id_length = 3;
+
 Protocol::Protocol() noexcept
 : m_body_length(0)
 {
@@ -35,6 +37,13 @@ const char* Protocol::body() const
 char* Protocol::body()
 {
     return m_data + header_length;
+}
+
+std::string Protocol::id()
+{
+    std::string id(m_data + header_length);
+    id = id.substr(0, id_length);
+    return id;
 }
 
 std::size_t Protocol::body_length() const

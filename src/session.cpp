@@ -2,7 +2,7 @@
 
 namespace sb {
 
-Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager, AgentTempature& a_agent,
+Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager, Agent& a_agent,
                 bool a_type)
 : m_socket(std::move(a_socket))
 , m_subscription_manager(a_subscribtion_manager)
@@ -97,7 +97,7 @@ void Session::publish()
         {
             if (!ec) {
                 m_events.pop_front();
-            if (!m_events.empty()) {
+            if (!m_events.empty()){
                 publish();
             }
             } else {

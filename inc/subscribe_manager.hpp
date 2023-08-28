@@ -16,10 +16,13 @@ namespace sb {
 
 typedef std::deque<Protocol> ProtocolQueue; //replace name also for protocol
 typedef std::shared_ptr<Subscriber> SubscriberPtr;
+// typedef std::unordered_map<std::string, std::vector<std::string>> ControlersAgents; 
+
+
 
 class SubscribeManager {
 public:
-    SubscribeManager() noexcept = default;
+    SubscribeManager();
 
     ~SubscribeManager() noexcept = default;
     // SubscribeManager(SubscribeManager const& a_other);
@@ -34,6 +37,7 @@ public:
 private:
     std::map<std::string, std::vector<SubscriberPtr>> m_subscriber_clan;
     ProtocolQueue m_recent_events;
+    // ControlersAgents& m_controler_agents;
 };
 
 }//namespace sb
