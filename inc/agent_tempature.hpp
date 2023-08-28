@@ -2,6 +2,7 @@
 #define AGENT_TEMPATURE_HPP
 
 #include "protocol.hpp"
+#include "agent.hpp"
 
 #include <boost/asio.hpp>
 
@@ -9,7 +10,7 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-class AgentTempature {
+class AgentTempature : public Agent{
 public: 
     AgentTempature();
 
@@ -19,8 +20,8 @@ public:
     AgentTempature& operator=(AgentTempature const& a_other) = default;
     AgentTempature& operator=(AgentTempature&& a_other) = default;
 
-    void wraper(Protocol& a_data, Protocol& a_event);
-    tcp::endpoint endpoint() const;
+    // void wraper(Protocol& a_data, Protocol& a_event);
+    tcp::endpoint endpoint() const override;
 private:
     tcp::endpoint m_endpoint;
 };

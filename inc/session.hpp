@@ -4,7 +4,7 @@
 #include "protocol.hpp"
 #include "subscriber.hpp"
 #include "subscribe_manager.hpp"
-#include "agent_tempature.hpp"
+#include "agent.hpp"
 
 #include <boost/asio.hpp>
 
@@ -20,7 +20,7 @@ typedef std::deque<Protocol> event_queue; //change name
 class Session : public Subscriber, public std::enable_shared_from_this<Session>{
 public:
     using Subscriber::Subscriber;
-    explicit Session(tcp::socket a_socket, SubscribeManager& a_subscribtion, AgentTempature& a_agent
+    explicit Session(tcp::socket a_socket, SubscribeManager& a_subscribtion, Agent& a_agent
                     , bool a_type);
 
     ~Session() noexcept = default;
@@ -46,7 +46,7 @@ private:
     event_queue m_events;
     std::vector<int> m_subscription;
     bool m_type;
-    AgentTempature& m_agent;
+    Agent& m_agent;
 };
 
 }//namespace sb
