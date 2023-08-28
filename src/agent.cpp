@@ -24,7 +24,8 @@ void Agent::wraper(Protocol& a_data, Protocol& a_event)
     std::cout << "for_test: " << line << "\n";
 
     std::string event = line;
-    sb::Event e(m_sensors_id["100"][1], m_sensors_id["100"][0]);
+    sb::Event e(m_sensors_id[a_data.id()][1], m_sensors_id[a_data.id()][0]);
+    e.seprate_data(event);
     e.event_warper(event);
 
     a_event.body_length(event.size());

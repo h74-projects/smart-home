@@ -55,9 +55,10 @@ int main()
 		std::thread t([&io_context](){ io_context.run(); });
 
 		std::string data = "40";
+		std::string id_and_data = "100" + data; //id must to be 3 bytes
 		sb::Protocol msg;
-        msg.body_length(data.size());
-        std::memcpy(msg.body(), data.c_str(), msg.body_length());
+        msg.body_length(id_and_data.size());
+        std::memcpy(msg.body(), id_and_data.c_str(), msg.body_length());
         msg.encode_header();
         
 

@@ -16,6 +16,7 @@ public:
     Event& operator=(Event&& a_other) = default;
 
     void event_warper(std::string& a_data);
+    void seprate_data(std::string& a_data);
 
 private:
     std::string m_event_type;
