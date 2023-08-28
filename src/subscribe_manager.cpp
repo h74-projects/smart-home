@@ -5,6 +5,11 @@
 
 namespace sb {
 
+// SubscribeManager::SubscribeManager(ControlersAgents& a_controler_agents)
+// : m_controler_agents(a_controler_agents)
+// {
+// }
+
 void SubscribeManager::join(SubscriberPtr a_subscriber, Protocol const& a_event)
 {
     if (std::string type(a_event.event_type()); type != "") {
@@ -24,8 +29,13 @@ void SubscribeManager::deliver(Protocol const& a_event)
 {
     m_recent_events.push_back(a_event);
     std::string type = a_event.event_type();
+
     for (auto subscriber : m_subscriber_clan[type]) {
-        subscriber->deliver(a_event);
+        // if(subscriber.get_agent(a_event, command)){
+
+            subscriber->deliver(a_event);
+        // }
+
     }
 }
   
