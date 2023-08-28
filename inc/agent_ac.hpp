@@ -12,7 +12,7 @@ namespace sb {
 
 class AgentAc : public Agent{
 public: 
-    AgentAc();
+    AgentAc(std::string const& a_file_name);
 
     ~AgentAc() noexcept = default;
     AgentAc(AgentAc const& a_other) = default;

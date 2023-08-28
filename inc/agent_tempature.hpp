@@ -4,6 +4,9 @@
 #include "protocol.hpp"
 #include "agent.hpp"
 
+#include <unordered_map>
+#include <string>
+
 #include <boost/asio.hpp>
 
 using boost::asio::ip::tcp;
@@ -12,7 +15,7 @@ namespace sb {
 
 class AgentTempature : public Agent{
 public: 
-    AgentTempature();
+    AgentTempature(std::string const& a_file_name);
 
     ~AgentTempature() noexcept = default;
     AgentTempature(AgentTempature const& a_other) = default;
@@ -22,6 +25,7 @@ public:
 
     // void wraper(Protocol& a_data, Protocol& a_event);
     tcp::endpoint endpoint() const override;
+
 private:
     tcp::endpoint m_endpoint;
 };
