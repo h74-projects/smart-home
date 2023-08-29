@@ -27,8 +27,8 @@ int main()
         std::unique_ptr<AgentControler> agent_controler_ptr = std::make_unique<AgentAc>();//TODO controlers for agent?
 
         boost::asio::io_context io_context;
-        Server s_controler(io_context, *(dynamic_cast<AgentAc*>(agent_controler_ptr.get())), false, sm);
-        Server s_sensor(io_context, *(dynamic_cast<AgentTempature*>(agent_ptr.get())), true, sm);
+        Server s_controler(io_context, *agent_controler_ptr, false, sm);
+        Server s_sensor(io_context, *agent_ptr, true, sm);
 
         io_context.run();
         
