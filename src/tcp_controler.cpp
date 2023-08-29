@@ -1,12 +1,19 @@
 #include "client.hpp"
 #include "protocol.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-  try {
+  try
+  {
+    if (argc != 2)
+    {
+      std::cerr << "Usage: <port>\n";
+      return 1;
+    }
+
     boost::asio::io_context io_context;
     tcp::resolver resolver(io_context);
-    auto endpoints = resolver.resolve("", "8080");
+    auto endpoints = resolver.resolve("", argv[1]);
     sb::Client c(io_context, endpoints);
 
     std::thread t([&io_context](){ io_context.run(); });
