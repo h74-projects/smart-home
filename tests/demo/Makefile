@@ -17,28 +17,19 @@ SOURCES_DIR = ../../src
 TARGET = main     
                    
 OBJECTS = main.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/session.o $(SOURCES_DIR)/protocol.o\
-			$(SOURCES_DIR)/subscriber.o $(SOURCES_DIR)/subscribe_manager.o $(SOURCES_DIR)/event.o\
-			$(SOURCES_DIR)/agent_tempature.o $(SOURCES_DIR)/agent.o $(SOURCES_DIR)/agent_ac.o
+				 $(SOURCES_DIR)/subscribe_manager.o $(SOURCES_DIR)/event.o $(SOURCES_DIR)/agent_tempature.o\
+				 $(SOURCES_DIR)/agent.o $(SOURCES_DIR)/agent_ac.o
 
-AGENT_CONTROLER_TARGET = $(SOURCES_DIR)/agent_controler                     
-AGENT_CONTROLER_OBJECTS = $(SOURCES_DIR)/agent_controler.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o\
-							 $(SOURCES_DIR)/protocol.o 
 
 $(TARGET) : $(OBJECTS)
 
-$(AGENT_CONTROLER_TARGET) : $(AGENT_CONTROLER_OBJECTS)
-
 check : $(TARGET)
 	@./$(TARGET) -v
-
-agent_controler: $(AGENT_CONTROLER_TARGET)
-	@./$(AGENT_CONTROLER_TARGET) -v 
 
 recheck: clean check
 
 clean:
 	@$(RM) $(TARGET) $(OBJECTS)
-	@$(RM) $(AGENT_CONTROLER_TARGET) $(AGENT_CONTROLER_OBJECTS)
 
 val: $(TARGET)
 	valgrind --leak-check=yes -s -q ./main
@@ -55,8 +46,7 @@ $(SOURCES_DIR)/server.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/s
 $(SOURCES_DIR)/session.o: $(INCLUDES_DIR)/subscribe_manager.hpp $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/subscriber.hpp\
 						  $(INCLUDES_DIR)/agent_tempature.hpp $(INCLUDES_DIR)/agent.hpp
 $(SOURCES_DIR)/protocol.o: $(INCLUDES_DIR)/protocol.hpp
-$(SOURCES_DIR)/agent.o: $(INCLUDES_DIR)/agent.hpp
-$(SOURCES_DIR)/subscriber.o: $(INCLUDES_DIR)/protocol.hpp  
+$(SOURCES_DIR)/agent.o: $(INCLUDES_DIR)/agent.hpp 
 $(SOURCES_DIR)/subscribe_manager.o: $(INCLUDES_DIR)/subscriber.hpp $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/client.o: $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/agent_tempature.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent.hpp
