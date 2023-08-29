@@ -23,9 +23,9 @@ public:
   void write(const Protocol& msg);
   void close();
 
+  void do_read_header();
 private:
   void do_connect(const tcp::resolver::results_type& endpoints);
-  void do_read_header();
   void do_read_body();
   void do_write();
   

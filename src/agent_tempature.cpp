@@ -15,4 +15,11 @@ tcp::endpoint AgentTempature::endpoint() const
     return m_endpoint;
 }
 
+bool AgentTempature::check_event(Protocol const& a_event, Protocol& a_command)
+{
+    a_event.data();
+    a_command.body();
+    return true;
+}
+
 }// amespace sb

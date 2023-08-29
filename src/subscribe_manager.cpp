@@ -31,11 +31,12 @@ void SubscribeManager::deliver(Protocol const& a_event)
     std::string type = a_event.event_type();
 
     for (auto subscriber : m_subscriber_clan[type]) {
-        // if(subscriber.get_agent(a_event, command)){
-
-            subscriber->deliver(a_event);
-        // }
-
+        Protocol command;
+        if(subscriber->signal_controler(a_event, command)){
+            std::cout << command.data();
+            std::cout << a_event.data();
+            subscriber->deliver(command);
+        }
     }
 }
   

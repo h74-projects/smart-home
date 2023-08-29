@@ -61,6 +61,7 @@ $(SOURCES_DIR)/subscribe_manager.o: $(INCLUDES_DIR)/subscriber.hpp $(INCLUDES_DI
 $(SOURCES_DIR)/client.o: $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/agent_tempature.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent.hpp
 $(SOURCES_DIR)/agent_ac.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent.hpp
-main.o: $(INCLUDES_DIR)/server.hpp $(INCLUDES_DIR)/agent_tempature.hpp $(INCLUDES_DIR)/agent_ac.hpp $(INCLUDES_DIR)/agent.hpp
+main.o: $(INCLUDES_DIR)/server.hpp $(INCLUDES_DIR)/agent_tempature.hpp $(INCLUDES_DIR)/agent_ac.hpp\
+				 $(INCLUDES_DIR)/agent.hpp $(INCLUDES_DIR)/subscribe_manager.hpp
 
 
