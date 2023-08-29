@@ -6,7 +6,7 @@
 namespace sb {
 
 struct Subscriber {
-    Subscriber(int a_event_type = 0);
+    Subscriber(int a_event_type = 1);
 
     virtual ~Subscriber() {}
     virtual void deliver(Protocol const& msg) = 0; //add delete for all the 5
