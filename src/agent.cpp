@@ -18,7 +18,6 @@ Agent::Agent(std::string const& a_file_name)
 
 void Agent::wraper(Protocol& a_data, Protocol& a_event)
 {
-    // std::string type = "1";
     std::string line(a_data.body());
     line = line.substr(0, a_data.body_length());
     std::cout << "for_test: " << line << "\n";
