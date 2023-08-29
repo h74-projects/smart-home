@@ -23,18 +23,12 @@ public:
     explicit Session(tcp::socket a_socket, SubscribeManager& a_subscribtion, Agent& a_agent, bool a_type);
 
     ~Session() noexcept = default;
-    // Session(Session const& a_other);
-    // Session(Session&& a_other);
-    // Session& operator=(Session const& a_other);
-    // Session& operator=(Session&& a_other);
 
     void deliver(Protocol const& a_msg) override;
     bool signal_controler(Protocol const& a_event, Protocol& a_command) override;
     int event_type() const override;
 
     void start();
-    void subscribe();
-    void recieve_subscribe();
 
 private:
     void parse_event();

@@ -17,7 +17,6 @@ void Session::start()
     if(m_type){ // sensor socket state
         recieve();
     }else { // controler socket state
-        // subscribe();
         m_subscription_manager.join(shared_from_this());
     }
 }
@@ -30,34 +29,6 @@ void Session::deliver(Protocol const& a_msg)
     {
         publish();
     }
-}
-
-void Session::recieve_subscribe()
-{
-    auto self(shared_from_this());
-    boost::asio::async_read(m_socket, boost::asio::buffer(m_incoming_event.data(), sb::header_length), 
-        [this, self](boost::system::error_code ec, std::size_t /*length*/){ //length comment
-            if (!ec && m_incoming_event.check_packet_length()) {
-                subscribe();
-            }else {
-                recieve_subscribe();
-            }
-        });
-}
-
-void Session::subscribe()
-{
-    auto self(shared_from_this());
-    boost::asio::async_read(m_socket, boost::asio::buffer(m_incoming_event.body(), m_incoming_event.body_length()),
-        [this, self](boost::system::error_code ec, std::size_t /*length*/)
-        {
-            if (!ec){
-                m_subscription_manager.join(shared_from_this(), m_incoming_event);
-                recieve_subscribe();
-            }else {
-                m_subscription_manager.leave(shared_from_this());
-            }
-        });
 }
 
 void Session::recieve()

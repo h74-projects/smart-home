@@ -17,14 +17,14 @@ SOURCES_DIR = ../../src
 AGENT_SENSOR_TARGET = $(SOURCES_DIR)/udp_agent                  
 AGENT_SENSOR_OBJECTS = $(SOURCES_DIR)/udp_agent.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o $(SOURCES_DIR)/protocol.o 
 
-SENSOR_TARGET = $(SOURCES_DIR)/udp_sensor                    
-SENSOR_OBJECTS = $(SOURCES_DIR)/udp_sensor.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/protocol.o
+SENSOR_TARGET = $(SOURCES_DIR)/tcp_sensor                    
+SENSOR_OBJECTS = $(SOURCES_DIR)/tcp_sensor.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/protocol.o
 
 $(AGENT_SENSOR_TARGET) : $(AGENT_SENSOR_OBJECTS)
 
 $(SENSOR_TARGET) : $(SENSOR_OBJECTS)
 
-udp_sensor: $(SENSOR_TARGET)
+tcp_sensor: $(SENSOR_TARGET)
 	@$(SENSOR_TARGET) -v
 
 udp_agent: $(AGENT_SENSOR_TARGET)

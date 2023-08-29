@@ -23,7 +23,6 @@ public:
 
     ~SubscribeManager() noexcept = default;
 
-    void join(SubscriberPtr a_subscriber, Protocol const& a_event);
     void join(SubscriberPtr a_subscriber);
     void leave(SubscriberPtr a_subscriber);
     void deliver(Protocol const& a_event);
