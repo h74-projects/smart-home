@@ -21,6 +21,8 @@ public:
     void wraper(Protocol& a_data, Protocol& a_event);
     void set_sensors_id();
 
+    virtual int event_type() const = 0;
+
 protected:
     Agent(Agent const& a_other) = default;
     Agent& operator=(Agent const& a_other) = default;

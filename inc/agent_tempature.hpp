@@ -27,6 +27,8 @@ public:
     tcp::endpoint endpoint() const override;
     bool check_event(Protocol const& a_event, Protocol& a_command) override;
 
+    int event_type() const override;
+
 private:
     tcp::endpoint m_endpoint;
 };

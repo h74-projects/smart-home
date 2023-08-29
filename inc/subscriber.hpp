@@ -6,16 +6,17 @@
 namespace sb {
 
 struct Subscriber {
-    Subscriber(int a_event_type = 1);
+    Subscriber() = default;
 
     virtual ~Subscriber() {}
     virtual void deliver(Protocol const& msg) = 0; //add delete for all the 5
     virtual bool signal_controler(Protocol const& a_event, Protocol& a_command) = 0;
+    virtual int event_type() const = 0;
 
-    int event_type() const;
+    // int event_type() const;
 
 private:
-    int m_event_type; //enum
+    // int m_event_type; //enum
 };
 
 }//namespace sb

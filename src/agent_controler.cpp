@@ -20,37 +20,38 @@ int main(int argc, char* argv[])
     std::string type = argv[2];
 
     // char line[chat_message::max_body_length + 1];
-    if (port == "7070") {
-      std::string line;
-      while (std::getline(std::cin, line))
-      {
-        std::cout << "din\n";
-        sb::Event e("room_1", type);
-        e.event_warper(line);
+    // if (port == "7070") {
+    //   std::string line;
+    //   while (std::getline(std::cin, line))
+    //   {
+    //     std::cout << "din\n";
+    //     sb::Event e("room_1", type);
+    //     e.event_warper(line);
 
-        sb::Protocol msg;
-        msg.body_length(line.size());
-        std::memcpy(msg.body(), line.c_str(), msg.body_length());
-        msg.encode_header();
-        c.write(msg);
-      }
-    }
+    //     sb::Protocol msg;
+    //     msg.body_length(line.size());
+    //     std::memcpy(msg.body(), line.c_str(), msg.body_length());
+    //     msg.encode_header();
+    //     c.write(msg);
+    //   }
+    // }
 
-    if (port == "8080") {
-      std::string line = "x";
+    // if (port == "8080") 
+    // while(true){
+      // std::string line = "x";
 
-      sb::Event e("subscribe", type);
-      e.event_warper(line);
+      // sb::Event e("subscribe", type);
+      // e.event_warper(line);
 
-      sb::Protocol msg;
-      msg.body_length(line.size());
-      std::memcpy(msg.body(), line.c_str(), msg.body_length());
-      msg.encode_header();
-      std::this_thread::sleep_for(std::chrono::seconds(1));
-      c.write(msg);
+      // sb::Protocol msg;
+      // msg.body_length(line.size());
+      // std::memcpy(msg.body(), line.c_str(), msg.body_length());
+      // msg.encode_header();
+      // std::this_thread::sleep_for(std::chrono::seconds(1));
+      // c.write(msg);
 
       while(true);
-    }
+    // }
 
     c.close();
     t.join();

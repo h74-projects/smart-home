@@ -17,7 +17,8 @@ void Session::start()
     if(m_type){ // sensor socket state
         recieve();
     }else { // controler socket state
-        subscribe();
+        // subscribe();
+        m_subscription_manager.join(shared_from_this());
     }
 }
 
@@ -109,6 +110,11 @@ void Session::publish()
 bool Session::signal_controler(Protocol const& a_event, Protocol& a_command)
 {
     return m_agent.check_event(a_event, a_command);
+}
+
+int Session::event_type() const
+{
+    return m_agent.event_type();
 }
 
 }// namespace sb

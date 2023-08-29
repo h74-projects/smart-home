@@ -22,4 +22,9 @@ bool AgentTempature::check_event(Protocol const& a_event, Protocol& a_command)
     return true;
 }
 
+int AgentTempature::event_type() const
+{
+    return 0;
+}
+
 }// amespace sb

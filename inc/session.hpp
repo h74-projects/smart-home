@@ -30,6 +30,7 @@ public:
 
     void deliver(Protocol const& a_msg) override;
     bool signal_controler(Protocol const& a_event, Protocol& a_command) override;
+    int event_type() const override;
 
     void start();
     void subscribe();

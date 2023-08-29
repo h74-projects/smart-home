@@ -10,6 +10,7 @@ namespace sb {
 AgentAc::AgentAc(std::string const& a_file_name)
 : Agent(a_file_name)
 , m_endpoint(tcp::v4(), 8080)
+, m_event_type(1)
 {
 }
 
@@ -30,6 +31,11 @@ bool AgentAc::check_event(Protocol const& a_event, Protocol& a_command)
 		return true;
 	}
 	return false;
+}
+
+int AgentAc::event_type() const
+{
+    return m_event_type;
 }
 
 }// amespace sb
