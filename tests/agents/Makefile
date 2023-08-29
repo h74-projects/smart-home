@@ -14,22 +14,22 @@ LDLIBS += -lpthread
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-TCP_AGENT_TARGET = $(SOURCES_DIR)/tcp_agent                     
-TCP_AGENT_OBJECTS = $(SOURCES_DIR)/tcp_agent.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o\
+TCP_CONTROLER_TARGET = $(SOURCES_DIR)/tcp_controler                     
+TCP_CONTROLER_OBJECTS = $(SOURCES_DIR)/tcp_controler.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/event.o\
 							 $(SOURCES_DIR)/protocol.o 
 
 TCP_SENSOR_TARGET = $(SOURCES_DIR)/tcp_sensor                    
 TCP_SENSOR_OBJECTS = $(SOURCES_DIR)/tcp_sensor.o $(SOURCES_DIR)/client.o $(SOURCES_DIR)/protocol.o
 
-$(TCP_AGENT_TARGET) : $(TCP_AGENT_OBJECTS)
+$(TCP_CONTROLER_TARGET) : $(TCP_CONTROLER_OBJECTS)
 
 $(TCP_SENSOR_TARGET) : $(TCP_SENSOR_OBJECTS)
 
 tcp_sensor: $(TCP_SENSOR_TARGET)
 	@$(TCP_SENSOR_TARGET) -v
 
-tcp_agent: $(TCP_AGENT_TARGET)
-	@./$(TCP_AGENT_TARGET) -v 
+tcp_controler: $(TCP_CONTROLER_TARGET)
+	@./$(TCP_CONTROLER_TARGET) -v 
 
 check : $(TARGET)
 	@./$(TARGET) -v
@@ -37,13 +37,13 @@ check : $(TARGET)
 recheck: clean check
 
 clean:
-	@$(RM) $(TCP_AGENT_TARGET) $(TCP_AGENT_OBJECTS)
+	@$(RM) $(TCP_CONTROLER_TARGET) $(TCP_CONTROLER_OBJECTS)
 	@$(RM) $(TCP_SENSOR_TARGET) $(TCP_SENSOR_OBJECTS)
 
-val: $(TCP_AGENT_TARGET) $(TCP_SENSOR_TARGET)
+val: $(TCP_CONTROLER_TARGET) $(TCP_SENSOR_TARGET)
 	valgrind --leak-check=yes -s -q ./utest
 
-hell: $(TCP_AGENT_TARGET) $(TCP_SENSOR_TARGET)
+hell: $(TCP_CONTROLER_TARGET) $(TCP_SENSOR_TARGET)
 	valgrind --tool=helgrind --max-threads=500 -s ./$(TARGET) 2> hell.log
 
 .PHONY: clean all val hell check recheck

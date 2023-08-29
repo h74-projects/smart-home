@@ -117,5 +117,6 @@ udp_sensor
 udp_agent
 agent_controler
 tcp_sensor
+tcp_controler
 *.log
 
