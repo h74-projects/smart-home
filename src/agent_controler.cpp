@@ -36,21 +36,21 @@ int main(int argc, char* argv[])
       }
     }
 
-    // if (port == "8080") {
-    //   std::string line = "x";
+    if (port == "8080") {
+      std::string line = "x";
 
-    //   sb::Event e("subscribe", type);
-    //   e.event_warper(line);
+      sb::Event e("subscribe", type);
+      e.event_warper(line);
 
-    //   sb::Protocol msg;
-    //   msg.body_length(line.size());
-    //   std::memcpy(msg.body(), line.c_str(), msg.body_length());
-    //   msg.encode_header();
-    //   std::this_thread::sleep_for(std::chrono::seconds(1));
-    //   c.write(msg);
+      sb::Protocol msg;
+      msg.body_length(line.size());
+      std::memcpy(msg.body(), line.c_str(), msg.body_length());
+      msg.encode_header();
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+      c.write(msg);
 
-    //   while(true);
-    // }
+      while(true);
+    }
 
     c.close();
     t.join();
