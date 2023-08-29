@@ -1,5 +1,8 @@
 #include "session.hpp"
 
+#include "agent_sensor.hpp"
+#include "agent_controler.hpp"
+
 namespace sb {
 
 Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager, Agent& a_agent,
@@ -52,7 +55,7 @@ void Session::parse_event()
         {
             if (!ec){
                 Protocol event;
-                m_agent.wraper(m_incoming_event, event);
+                (dynamic_cast<AgentSensor&>(m_agent)).wraper(m_incoming_event, event);
                 m_subscription_manager.deliver(event);
                 recieve();
             }else {
@@ -80,12 +83,12 @@ void Session::publish()
 
 bool Session::signal_controler(Protocol const& a_event, Protocol& a_command)
 {
-    return m_agent.check_event(a_event, a_command);
+    return (dynamic_cast<AgentControler&>(m_agent)).check_event(a_event, a_command);
 }
 
 int Session::event_type() const
 {
-    return m_agent.event_type();
+    return (dynamic_cast<AgentControler&>(m_agent)).event_type();
 }
 
 }// namespace sb

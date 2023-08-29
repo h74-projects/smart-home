@@ -7,9 +7,8 @@
 
 namespace sb {
 
-AgentAc::AgentAc(std::string const& a_file_name)
-: Agent(a_file_name)
-, m_endpoint(tcp::v4(), 8080)
+AgentAc::AgentAc()
+: m_endpoint(tcp::v4(), 8080)
 , m_event_type(1)
 {
 }

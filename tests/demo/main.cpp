@@ -2,6 +2,8 @@
 #include "agent_tempature.hpp"
 #include "agent_ac.hpp"
 #include "agent_sensor.hpp"
+#include "agent_controler.hpp"
+#include "agent.hpp"
 #include "subscribe_manager.hpp"
 
 #include <exception>
@@ -22,7 +24,7 @@ int main()
         SubscribeManager sm;
 
         std::unique_ptr<AgentSensor> agent_ptr = std::make_unique<AgentTempature>("../../assets/sensor_id.dat");
-        std::unique_ptr<Agent> agent_controler_ptr = std::make_unique<AgentAc>("../../assets/sensor_id.dat");//TODO controlers for agent?
+        std::unique_ptr<AgentControler> agent_controler_ptr = std::make_unique<AgentAc>();//TODO controlers for agent?
 
         boost::asio::io_context io_context;
         Server s_controler(io_context, *(dynamic_cast<AgentAc*>(agent_controler_ptr.get())), false, sm);

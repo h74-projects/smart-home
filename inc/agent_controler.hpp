@@ -2,6 +2,7 @@
 #define AGENT_CONTROLER_HPP
 
 #include "protocol.hpp"
+#include "agent.hpp"
 
 #include <boost/asio.hpp>
 
@@ -9,7 +10,7 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-class AgentControler {
+class AgentControler : public Agent{
 public:
     virtual ~AgentControler() = default;
     

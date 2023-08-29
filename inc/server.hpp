@@ -3,6 +3,9 @@
 
 #include "subscribe_manager.hpp"
 #include "agent.hpp"
+// #include "agent_sensor.hpp"
+// #include "agent_controler.hpp"
+
 
 #include <boost/asio.hpp>
 
@@ -12,8 +15,9 @@ namespace sb {
 
 class Server {
 public:
-    explicit Server(boost::asio::io_context& a_io_context, Agent& a_agent, bool a_device_type, SubscribeManager& a_sm);
-    
+    explicit Server(boost::asio::io_context& a_io_context, Agent & a_agent, bool a_device_type, SubscribeManager& a_sm);
+    // explicit Server(boost::asio::io_context& a_io_context, AgentControler& a_agent, bool a_device_type, SubscribeManager& a_sm);
+
     ~Server() noexcept = default;
 
 private:
