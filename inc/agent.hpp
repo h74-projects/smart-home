@@ -14,6 +14,7 @@ public:
     virtual ~Agent() = default;
     
     virtual tcp::endpoint endpoint() const = 0;
+    virtual bool check_event(Protocol const& a_event, Protocol& a_command) = 0;
 
     Agent(std::string const& a_file_name);
 

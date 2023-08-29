@@ -22,7 +22,7 @@ typedef std::shared_ptr<Subscriber> SubscriberPtr;
 
 class SubscribeManager {
 public:
-    SubscribeManager();
+    SubscribeManager() noexcept = default;
 
     ~SubscribeManager() noexcept = default;
     // SubscribeManager(SubscribeManager const& a_other);

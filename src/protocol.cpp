@@ -88,7 +88,7 @@ std::string Protocol::event_type() const
 
 std::string Protocol::event_location() const
 {
-    std::string event_string(this->data());
+    std::string event_string(this->data());//this-.length??
     std::stringstream ss;
     std::string location;
     for(size_t i = 0; i < 2; ++i){
@@ -96,6 +96,17 @@ std::string Protocol::event_location() const
         ss >> location;
     }
     return location;
+}
+
+std::string Protocol::event_data() const
+{
+    std::string event_string(this->data());//this-.length??
+    std::stringstream ss;
+    std::string data;
+    ss << event_string;
+    ss >> data;
+    data = data.substr(header_length - 2);
+    return data;
 }
 
 }// namespace sb

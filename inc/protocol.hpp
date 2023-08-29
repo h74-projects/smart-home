@@ -34,6 +34,7 @@ public:
 
     std::string event_type() const;
     std::string event_location() const;
+    std::string event_data() const; //return by ref?
 
 private:
     char m_data[header_length + max_body_length];

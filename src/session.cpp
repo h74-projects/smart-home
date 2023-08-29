@@ -106,4 +106,9 @@ void Session::publish()
         });
 }
 
+bool Session::signal_controler(Protocol const& a_event, Protocol& a_command)
+{
+    return m_agent.check_event(a_event, a_command);
+}
+
 }// namespace sb

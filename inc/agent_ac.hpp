@@ -22,6 +22,8 @@ public:
 
     // void wraper(Protocol& a_data, Protocol& a_event);
     tcp::endpoint endpoint() const override;
+    bool check_event(Protocol const& a_event, Protocol& a_command);
+    
 private:
     tcp::endpoint m_endpoint;
 };
