@@ -21,7 +21,7 @@ tcp::endpoint AgentAc::endpoint() const
 
 bool AgentAc::check_event(Protocol const& a_event, Protocol& a_command)
 {
-	std::cout << ">>>event.data()" << a_event.event_data() << '\n';
+	std::cout << "agent_ac:event.data()" << a_event.event_data() << '\n';
 	char command[] = "turn on";
 	
 	if(a_event.event_data() == "40"){
