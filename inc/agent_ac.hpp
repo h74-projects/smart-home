@@ -24,8 +24,11 @@ public:
     tcp::endpoint endpoint() const override;
     bool check_event(Protocol const& a_event, Protocol& a_command);
     
+    int event_type() const;
+    
 private:
     tcp::endpoint m_endpoint;
+    int m_event_type;
 };
 
 }//namespace sb

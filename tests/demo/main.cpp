@@ -22,18 +22,18 @@
 using boost::asio::ip::tcp;
 using namespace sb;
 
-// typedef std::unordered_map<std::string, std::vector<std::string>> ControlersAgents; 
+typedef std::unordered_map<std::string, std::vector<std::string>> ControlersAgents; 
 
-// void set_controler_agents(ControlersAgents& a_controler_agents)
-// {
-//     std::ifstream sensors_id_file("../../assets/sensor_id.dat");
-//     if(!sensors_id_file) {
-//         std::runtime_error("file opcode_map.dat could not be opened!");
-//     }
-//     nlohmann::json json_sendors_id;
-//     sensors_id_file >> json_sendors_id;
-//     a_controler_agents = json_sendors_id.get<ControlersAgents>();
-// }
+void set_controler_agents(ControlersAgents& a_controler_agents)
+{
+    std::ifstream sensors_id_file("../../assets/agents.dat");
+    if(!sensors_id_file) {
+        std::runtime_error("file opcode_map.dat could not be opened!");
+    }
+    nlohmann::json json_sendors_id;
+    sensors_id_file >> json_sendors_id;
+    a_controler_agents = json_sendors_id.get<ControlersAgents>();
+}
 
 
 int main()

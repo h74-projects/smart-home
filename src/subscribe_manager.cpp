@@ -14,7 +14,19 @@ void SubscribeManager::join(SubscriberPtr a_subscriber, Protocol const& a_event)
 {
     a_event.data();
     // std::cout << "din " <<  std::to_string(a_subscriber->event_type()) << '\n';
-    if (std::string type(a_event.event_type()); type != "") {
+    std::string type(a_event.event_type());
+    if (type != "") {
+        m_subscriber_clan[type].push_back(a_subscriber);
+        std::cout << "subscribed to " << type << "\n";
+    }
+}
+
+void SubscribeManager::join(SubscriberPtr a_subscriber)
+{
+    // a_event.data();
+    // std::cout << "din " <<  std::to_string(a_subscriber->event_type()) << '\n';
+    std::string type(std::to_string(a_subscriber->event_type()));
+    if (type != "") {
         m_subscriber_clan[type].push_back(a_subscriber);
         std::cout << "subscribed to " << type << "\n";
     }
