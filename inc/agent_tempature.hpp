@@ -2,7 +2,7 @@
 #define AGENT_TEMPATURE_HPP
 
 #include "protocol.hpp"
-#include "agent.hpp"
+#include "agent_sensor.hpp"
 
 #include <unordered_map>
 #include <string>
@@ -13,7 +13,7 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-class AgentTempature : public Agent{
+class AgentTempature : public AgentSensor{
 public: 
     AgentTempature(std::string const& a_file_name);
 
