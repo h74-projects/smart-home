@@ -3,12 +3,12 @@
 #include <thread> //sleep_for
 #include <chrono> 
 
-#include "udp.hpp"
+#include "client.hpp"
 #include "protocol.hpp"
 
 #include <boost/asio.hpp>
 
-using boost::asio::ip::udp;
+using boost::asio::ip::tcp;
 
 int main(int argc, char* argv[])
 {
@@ -19,11 +19,11 @@ int main(int argc, char* argv[])
       std::cerr << "Usage: <port>\n";
       return 1;
     }
-    
+
 	boost::asio::io_context io_context;
-	udp::resolver resolver(io_context);
+	tcp::resolver resolver(io_context);
 	auto endpoints = resolver.resolve("", argv[1]);
-	sb::Udp c(io_context, endpoints);
+	sb::Client c(io_context, endpoints);
 	std::thread t([&io_context](){ io_context.run(); });
 
 	std::string data = "40"; //TODO change to return randoms numbers

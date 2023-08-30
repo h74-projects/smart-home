@@ -7,9 +7,8 @@
 
 namespace sb {
 
-AgentAc::AgentAc(std::string const& a_file_name)
-: Agent(a_file_name)
-, m_endpoint(tcp::v4(), 8080)
+AgentAc::AgentAc()
+: m_endpoint(tcp::v4(), 8080)
 , m_event_type(1)
 {
 }
@@ -21,7 +20,7 @@ tcp::endpoint AgentAc::endpoint() const
 
 bool AgentAc::check_event(Protocol const& a_event, Protocol& a_command)
 {
-	std::cout << ">>>event.data()" << a_event.event_data() << '\n';
+	std::cout << "agent_ac:event.data()" << a_event.event_data() << '\n';
 	char command[] = "turn on";
 	
 	if(a_event.event_data() == "40"){

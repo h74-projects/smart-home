@@ -1,4 +1,4 @@
-#include "agent.hpp"
+#include "agent_sensor.hpp"
 
 #include "event.hpp"
 
@@ -9,16 +9,15 @@
 
 namespace sb {
 
-Agent::Agent(std::string const& a_file_name)
+AgentSensor::AgentSensor(std::string const& a_file_name)
 : m_file_name(a_file_name)
 , m_sensors_id{}
 {
     set_sensors_id();
 }
 
-void Agent::wraper(Protocol& a_data, Protocol& a_event)
+void AgentSensor::wraper(Protocol& a_data, Protocol& a_event)
 {
-    // std::string type = "1";
     std::string line(a_data.body());
     line = line.substr(0, a_data.body_length());
     std::cout << "for_test: " << line << "\n";
@@ -33,7 +32,7 @@ void Agent::wraper(Protocol& a_data, Protocol& a_event)
     a_event.encode_header();
 }
 
-void Agent::set_sensors_id()
+void AgentSensor::set_sensors_id()
 {
     std::ifstream sensors_id_file(m_file_name);
     if(!sensors_id_file) {
