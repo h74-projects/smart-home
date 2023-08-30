@@ -4,8 +4,8 @@
 
 namespace sb {
 
-AgentTempature::AgentTempature(std::string const& a_file_name)
-: AgentSensor(a_file_name)
+AgentTempature::AgentTempature(SensorsId& a_sensors_id)
+: AgentSensor(a_sensors_id)
 , m_endpoint(tcp::v4(), 7070)
 {
 }
@@ -15,4 +15,4 @@ tcp::endpoint AgentTempature::endpoint() const
     return m_endpoint;
 }
 
-}// amespace sb
+}// namespace sb
