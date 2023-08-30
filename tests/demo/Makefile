@@ -6,10 +6,12 @@ CFLAGS+= -Wextra
 CFLAGS+= -pedantic -g
 CFLAGS+= -pthread
 
+LDFLAGS = -ldl
+
 CXXFLAGS = $(CFLAGS)
 CXXFLAGS += -std=c++17 -I$(INCLUDES_DIR)
 
-LDLIBS += -lpthread
+LDLIBS += -lpthread 
 
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
@@ -17,7 +19,7 @@ SOURCES_DIR = ../../src
 TARGET = main     
                    
 OBJECTS = main.o $(SOURCES_DIR)/server.o $(SOURCES_DIR)/session.o $(SOURCES_DIR)/protocol.o\
-				 $(SOURCES_DIR)/subscribe_manager.o $(SOURCES_DIR)/event.o $(SOURCES_DIR)/agent_tempature.o\
+				 $(SOURCES_DIR)/subscribe_manager.o $(SOURCES_DIR)/event.o\
 				 $(SOURCES_DIR)/agent_ac.o $(SOURCES_DIR)/agent_sensor.o $(SOURCES_DIR)/smart_building.o
 
 
@@ -50,7 +52,7 @@ $(INCLUDES_DIR)/agent_controler.hpp : $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DI
 $(SOURCES_DIR)/agent_sensor.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent.hpp
 $(SOURCES_DIR)/subscribe_manager.o: $(INCLUDES_DIR)/subscriber.hpp $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/client.o: $(INCLUDES_DIR)/protocol.hpp
-$(SOURCES_DIR)/agent_tempature.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_sensor.hpp
+# $(SOURCES_DIR)/agent_tempature.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_sensor.hpp
 $(SOURCES_DIR)/agent_ac.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_controler.hpp
 $(SOURCES_DIR)/smart_building.o: $(INCLUDES_DIR)/server.hpp $(INCLUDES_DIR)/agent_tempature.hpp $(INCLUDES_DIR)/agent_ac.hpp\
 				 $(INCLUDES_DIR)/subscribe_manager.hpp

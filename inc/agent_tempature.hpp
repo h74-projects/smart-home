@@ -23,6 +23,10 @@ private:
     tcp::endpoint m_endpoint;
 };
 
+extern "C" AgentSensor* create_agent(SensorsId& a_sensors_id) {
+    return new AgentTempature(a_sensors_id);
+}
+
 }//namespace sb
 
 #endif // AGENT_TEMPATURE_HPP

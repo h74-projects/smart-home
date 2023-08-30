@@ -1,6 +1,6 @@
 #include "smart_building.hpp"
 #include "server.hpp"
-#include "agent_tempature.hpp"
+#include "agent_sensor.hpp"
 #include "agent_ac.hpp"
 #include "subscribe_manager.hpp"
 
@@ -11,15 +11,16 @@
 #include <stdexcept> //runtime error
 #include <nlohmann/json.hpp> //nlohmann::json
 #include <vector>
+#include <dlfcn.h> //dlsym, dlerror, dlopen
 
 #include <boost/asio.hpp>
 
-using boost::asio::ip::tcp;
-
-namespace sb {
-
 typedef std::unordered_map<std::string, std::vector<std::string>> SensorsId;
 typedef std::unordered_map<std::string, SensorsId> EventType;
+typedef sb::AgentSensor* (create_agent_func)(SensorsId&);
+using boost::asio::ip::tcp;
+namespace sb {
+
 
 void SmartBuilding::run()
 {   
@@ -33,8 +34,24 @@ void SmartBuilding::run()
 
     try{
         SubscribeManager sm;
+        // load the triangle library
+        void* agent = dlopen("../libraries/agent_tempature.so", RTLD_LAZY);
+        if (!agent) {
+            std::cerr << "Cannot load library: " << dlerror() << '\n';
+            return;
+        }
+        // reset errors
+        dlerror();
+        // load the symbols
+        create_agent_func* create_agent_lll  = (create_agent_func*)dlsym(agent, "create_agent");
+        if (const char* dlsym_error = dlerror(); !dlsym_error) {
+            std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+            return;
+        }
+        // create an instance of the class
+        std::unique_ptr<AgentSensor> agent_ptr(create_agent_lll(sensors_per_type["1"]));
+        // unload the triangle library
 
-        std::unique_ptr<AgentSensor> agent_ptr = std::make_unique<AgentTempature>(sensors_per_type["1"]);
         std::unique_ptr<AgentControler> agent_controler_ptr = std::make_unique<AgentAc>();//TODO controlers for agent?
 
         boost::asio::io_context io_context;
