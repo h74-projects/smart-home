@@ -10,13 +10,11 @@
 #include <boost/asio.hpp>
 
 using boost::asio::ip::tcp;
-
 namespace sb {
 
 class AgentTempature : public AgentSensor{
 public: 
-    AgentTempature(std::string const& a_file_name);
-
+    AgentTempature(SensorsId& a_sensors_id);
     ~AgentTempature() noexcept = default;
 
     tcp::endpoint endpoint() const override;
