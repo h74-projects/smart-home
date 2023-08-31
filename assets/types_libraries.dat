@@ -1,4 +1,4 @@
 {
-	"1" : "agent_temperature",
-	"2" : "agent_motion"
+	"1" : "../libraries/libagent_tempature.so",
+	"2" : "../libraries/libagent_access.so"
 }

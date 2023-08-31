@@ -15,7 +15,7 @@ namespace sb {
 
 class Server {
 public:
-    explicit Server(boost::asio::io_context& a_io_context, Agent & a_agent, bool a_device_type, SubscribeManager& a_sm);
+    explicit Server(boost::asio::io_context& a_io_context, std::unique_ptr<Agent> a_agent, bool a_device_type, SubscribeManager& a_sm);
     // explicit Server(boost::asio::io_context& a_io_context, AgentControler& a_agent, bool a_device_type, SubscribeManager& a_sm);
 
     ~Server() noexcept = default;

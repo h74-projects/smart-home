@@ -7,7 +7,7 @@
 
 namespace sb {
 
-static constexpr std::size_t id_length = 3;
+const std::size_t id_length = 3;
 
 Protocol::Protocol() noexcept
 : m_body_length(0)
