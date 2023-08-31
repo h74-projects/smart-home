@@ -9,10 +9,12 @@
 #include <vector>
 #include <string>
 #include <tuple>
+#include <dlfcn.h> //dlsym, dlerror, dlopen
+#include <iostream> //std::cerr
 
-namespace sb {
+namespace sb {     
 
-typedef std::unordered_map<std::string, std::vector<std::string>> SensorsId;
+typedef std::unordered_map<std::string, std::vector<std::string>> SensorsId; 
 typedef std::unordered_map<std::string, SensorsId> EventType;
 typedef AgentSensor* create_agent_func(SensorsId&);
 typedef AgentControler* create_agent_controler_func();
@@ -30,14 +32,37 @@ private:
     void load_sensor_agents_type(std::string const& a_path);
     void load_controlers_agents_type(std::string const& a_path);
     void load_sensors(std::string const& a_path);
-    create_agent_func* make_agent_sensor(std::string a_event_type);
-    create_agent_controler_func* make_agent_controler(std::string a_event_type);
+
+    template <typename Agent>
+    Agent* make_agent(std::string a_event_type, std::unordered_map<std::string, std::string>& a_map);
 
 private:
     std::unordered_map<std::string, std::string> m_sensor_agents;
     std::unordered_map<std::string, std::string> m_controler_agents;
     EventType m_sensors_per_type;
 };
+
+template <typename Agent>
+Agent* SmartBuilding::make_agent(std::string a_event_type, std::unordered_map<std::string, std::string>& a_map)
+{
+    void* agent = dlopen(a_map[a_event_type].c_str(), RTLD_LAZY);
+
+    if (!agent) {
+        std::cerr << "Cannot load library: " << dlerror() << '\n';
+        return nullptr;
+    }
+
+    dlerror();
+    Agent* create_agent_lib  = (Agent*)dlsym(agent, "create_agent");
+    const char* dlsym_error = dlerror();
+
+    if (dlsym_error) {
+        std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+        return nullptr;
+    }
+
+    return create_agent_lib;
+}
 
 } //namespace sb
 
