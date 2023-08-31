@@ -5,13 +5,13 @@
 
 namespace sb {
 
-Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager, Agent& a_agent,
+Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager, std::unique_ptr<Agent> a_agent,
                 bool a_type)
 : m_socket(std::move(a_socket))
 , m_subscription_manager(a_subscribtion_manager)
 , m_subscription{}
 , m_type{a_type}
-, m_agent(a_agent)
+, m_agent(std::move(a_agent))
 {
 }
 
@@ -55,7 +55,7 @@ void Session::parse_event()
         {
             if (!ec){
                 Protocol event;
-                (dynamic_cast<AgentSensor&>(m_agent)).wraper(m_incoming_event, event);
+                dynamic_cast<AgentSensor&>(*m_agent).wraper(m_incoming_event, event);
                 m_subscription_manager.deliver(event);
                 recieve();
             }else {
@@ -83,12 +83,12 @@ void Session::publish()
 
 bool Session::signal_controler(Protocol const& a_event, Protocol& a_command)
 {
-    return (dynamic_cast<AgentControler&>(m_agent)).check_event(a_event, a_command);
+    return dynamic_cast<AgentControler&>(*m_agent).check_event(a_event, a_command);
 }
 
 int Session::event_type() const
 {
-    return (dynamic_cast<AgentControler&>(m_agent)).event_type();
+    return dynamic_cast<AgentControler&>(*m_agent).event_type();
 }
 
 }// namespace sb

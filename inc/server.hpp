@@ -25,7 +25,7 @@ private:
     
 private:
     tcp::acceptor m_acceptor;
-    Agent& m_agent;
+    std::unique_ptr<Agent> m_agent;
     bool m_device_type;
     SubscribeManager& m_subscribe_manager;
 };

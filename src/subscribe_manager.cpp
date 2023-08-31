@@ -23,12 +23,11 @@ void SubscribeManager::leave(SubscriberPtr a_subscriber)
 
 void SubscribeManager::deliver(Protocol const& a_event) 
 {
-    m_recent_events.push_back(a_event);
     std::string type = a_event.event_type();
 
     for (auto subscriber : m_subscriber_clan[type]) {
         Protocol command;
-        if(subscriber->signal_controler(a_event, command)){
+        if(subscriber->signal_controler(a_event, command)){ // TODO do deliver inside agent
             std::cout <<"sm: " <<  command.data();
             std::cout <<"sm: " << a_event.data();
             subscriber->deliver(command);
