@@ -24,10 +24,10 @@ int main(int argc, char* argv[])
 	tcp::resolver resolver(io_context);
 	auto endpoints = resolver.resolve("", argv[1]);
 	sb::Client c(io_context, endpoints);
-	std::thread t([&io_context](){ io_context.run(); });//join?
+	std::thread t([&io_context](){ io_context.run(); });
 
-	std::string data = "40"; //TODO change to return randoms numbers
-	std::string id_and_data = "100" + data; //id must to be 3 bytes
+	std::string data = "open"; //TODO change to return randoms numbers
+	std::string id_and_data = "300" + data; //id must to be 3 bytes
 	sb::Protocol msg;
 	msg.body_length(id_and_data.size());
 	std::memcpy(msg.body(), id_and_data.c_str(), msg.body_length());

@@ -7,8 +7,8 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-static constexpr std::size_t header_length = 4;
-static constexpr std::size_t max_body_length = 512;
+const std::size_t header_length = 4;
+const std::size_t max_body_length = 512;
 
 class Protocol {
 public:

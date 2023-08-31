@@ -1,5 +1,5 @@
-#ifndef AGENT_AC_HPP
-#define AGENT_AC_HPP
+#ifndef AGENT_DOOR_HPP
+#define AGENT_DOOR_HPP
 
 #include "protocol.hpp"
 #include "agent_controler.hpp"
@@ -10,11 +10,11 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-class AgentAc : public AgentControler{
+class AgentDoor : public AgentControler{
 public: 
-    AgentAc();
+    AgentDoor();
 
-    ~AgentAc() noexcept = default;
+    ~AgentDoor() noexcept = default;
 
     tcp::endpoint endpoint() const override; //TODO change return by value?
     bool check_event(Protocol const& a_event, Protocol& a_command) override;
@@ -26,10 +26,10 @@ private:
 };
 
 extern "C" AgentControler* create_agent() {
-    return new AgentAc();
+    return new AgentDoor();
 }
 
 
 }//namespace sb
 
-#endif // AGENT_AC_HPP
+#endif // AGENT_DOOR_HPP

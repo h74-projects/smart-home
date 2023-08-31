@@ -1,0 +1,4 @@
+{
+	"1" : "../libraries/libagent_ac.so",
+	"2" : "../libraries/libagent_door.so"
+}
