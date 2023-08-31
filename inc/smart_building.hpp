@@ -30,7 +30,8 @@ private:
     void load_sensor_agents_type(std::string const& a_path);
     void load_controlers_agents_type(std::string const& a_path);
     void load_sensors(std::string const& a_path);
-    Agents make_agent(std::pair<const std::string, SensorsId>& a_sensors_type);
+    create_agent_func* make_agent_sensor(std::string a_event_type);
+    create_agent_controler_func* make_agent_controler(std::string a_event_type);
 
 private:
     std::unordered_map<std::string, std::string> m_sensor_agents;
