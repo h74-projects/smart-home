@@ -20,7 +20,7 @@ typedef std::deque<Protocol> event_queue; //change name
 class Session : public Subscriber, public std::enable_shared_from_this<Session>{
 public:
     using Subscriber::Subscriber;
-    explicit Session(tcp::socket a_socket, SubscribeManager& a_subscribtion, Agent& a_agent, bool a_type);
+    explicit Session(tcp::socket a_socket, SubscribeManager& a_subscribtion, std::unique_ptr<Agent> a_agent, bool a_type);
 
     ~Session() noexcept = default;
 
@@ -42,7 +42,7 @@ private:
     event_queue m_events;
     std::vector<int> m_subscription;
     bool m_type;
-    Agent& m_agent;
+    std::unique_ptr<Agent> m_agent;
 };
 
 }//namespace sb

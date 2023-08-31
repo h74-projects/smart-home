@@ -12,7 +12,7 @@
 #include <nlohmann/json.hpp> //nlohmann::json
 #include <dlfcn.h> //dlsym, dlerror, dlopen
 #include <thread> 
-#include <vector> 
+#include <list> 
 
 #include <boost/asio.hpp>
 
@@ -44,13 +44,13 @@ Agents SmartBuilding::make_agent(std::pair<const std::string, SensorsId>& a_sens
     return std::make_tuple(create_agent_sensor_lib, create_agent_controler_lib);
 }
 
-void func(boost::asio::io_context& io_context, std::unique_ptr<AgentSensor>  agent_ptr,
-          std::unique_ptr<AgentSensor>  agent_controler_ptr, SubscribeManager& sm)
-{
-    Server s_controler(io_context, *agent_controler_ptr, false, sm);
-    Server s_sensor(io_context, *agent_ptr, true, sm); 
-    io_context.run();
-}
+// void func(boost::asio::io_context& io_context, std::unique_ptr<AgentSensor>  agent_ptr,
+//           std::unique_ptr<AgentSensor>  agent_controler_ptr, SubscribeManager& sm)
+// {
+//     Server s_controler(io_context, *agent_controler_ptr, false, sm);
+//     Server s_sensor(io_context, *agent_ptr, true, sm); 
+//     io_context.run();
+// }
 
 void SmartBuilding::run()
 {   
@@ -58,10 +58,10 @@ void SmartBuilding::run()
     load_controlers_agents_type("../../assets/types_controlers.dat");
     load_sensors("../../assets/sensor_id.dat");
 
-    boost::asio::io_context io_context;
-    std::vector<Server> servers;
+    std::list<Server> servers;
     // std::thread t([&io_context](){ io_context.run(); });
     // t.detach();
+    boost::asio::io_context io_context;
     for(auto sensors_type : m_sensors_per_type){
 
         try{
@@ -87,12 +87,12 @@ void SmartBuilding::run()
 
             // std::thread thread(func,io_context, std::move(agent_ptr), std::move(agent_controler_ptr), sm);
             // thread.detach(); // Detach the thread
-            servers.emplace_back(io_context, *agent_controler_ptr, false, sm);
-            servers.emplace_back(io_context, *agent_ptr, true, sm);
+            servers.emplace_back(io_context, std::move(agent_controler_ptr), false, sm);
+            servers.emplace_back(io_context, std::move(agent_ptr), true, sm);
 
 
-            // Server s_controler(io_context, *agent_controler_ptr, false, sm);
-            // Server s_sensor(io_context, *agent_ptr, true, sm);
+            // Server s_controler(io_context, std::move(agent_controler_ptr), false, sm);
+            // Server s_sensor(io_context, std::move(agent_ptr), true, sm);
             
 
         }catch (std::exception& e){

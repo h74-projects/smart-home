@@ -14,7 +14,6 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-typedef std::deque<Protocol> ProtocolQueue; //replace name also for protocol
 typedef std::shared_ptr<Subscriber> SubscriberPtr;
 
 class SubscribeManager {
@@ -29,7 +28,6 @@ public:
 
 private:
     std::map<std::string, std::vector<SubscriberPtr>> m_subscriber_clan;
-    ProtocolQueue m_recent_events;
 };
 
 }//namespace sb
