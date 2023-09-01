@@ -17,9 +17,10 @@ void Server::accept()
     m_acceptor.async_accept([this](boost::system::error_code ec, tcp::socket socket){
         if (!ec){
             std::make_shared<Session>(std::move(socket), m_subscribe_manager, std::move(m_agent), m_device_type)->start();
-        }//sensor state
+        }
 
-        accept();});
+        accept();
+    });
 }
 
 }// namespace sb 
