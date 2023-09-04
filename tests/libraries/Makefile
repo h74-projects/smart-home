@@ -25,6 +25,11 @@ OBJS_DOOR_CONTROLER = $(SOURCES_DIR)/agent_door.o $(SOURCES_DIR)/protocol.o $(SO
 TARGET_WINDOW_CONTROLER = libagent_window.so
 OBJS_WINDOW_CONTROLER = $(SOURCES_DIR)/agent_window.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/event.o
 
+TARGET_LOG_CONTROLER = libagent_log.so
+OBJS_LOG_CONTROLER = $(SOURCES_DIR)/agent_log_tempature.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/event.o
+
+all: tempature_agent access_agent ac_agent door_agent window_agent log_agent
+
 tempature_agent: $(TARGET_TEMPATURE_SENSOR)
 
 access_agent: $(TARGET_ACCESS_SENSOR)
@@ -35,7 +40,7 @@ door_agent: $(TARGET_DOOR_CONTROLER)
 
 window_agent: $(TARGET_WINDOW_CONTROLER)
 
-all: tempature_agent access_agent ac_agent door_agent window_agent
+log_agent: $(TARGET_LOG_CONTROLER)
 
 $(TARGET_TEMPATURE_SENSOR): $(OBJS_TEMPATURE_SENSOR) 
 	$(CC) $(CXXFLAGS) -shared -o $(TARGET_TEMPATURE_SENSOR) $(OBJS_TEMPATURE_SENSOR)
@@ -52,6 +57,9 @@ $(TARGET_DOOR_CONTROLER): $(OBJS_DOOR_CONTROLER)
 $(TARGET_WINDOW_CONTROLER): $(OBJS_WINDOW_CONTROLER) 
 	$(CC) $(CXXFLAGS) -shared -o $(TARGET_WINDOW_CONTROLER) $(OBJS_WINDOW_CONTROLER)
 
+$(TARGET_LOG_CONTROLER): $(OBJS_LOG_CONTROLER) 
+	$(CC) $(CXXFLAGS) -shared -o $(TARGET_LOG_CONTROLER) $(OBJS_LOG_CONTROLER)
+
 .c.o:
 	$(CC) $(CXXFLAGS) -cpp $< -o $@
 
@@ -61,6 +69,7 @@ clean:
 	$(RM) $(OBJS_AC_CONTROLER) $(TARGET_AC_CONTROLER)
 	$(RM) $(OBJS_DOOR_CONTROLER) $(TARGET_DOOR_CONTROLER)
 	$(RM) $(OBJS_WINDOW_CONTROLER) $(TARGET_WINDOW_CONTROLER)
+	$(RM) $(OBJS_LOG_CONTROLER) $(TARGET_LOG_CONTROLER)
 
 .PHONY: clean
 
@@ -69,6 +78,7 @@ $(SOURCES_DIR)/agent_access.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/even
 $(SOURCES_DIR)/agent_ac.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_controler.hpp
 $(SOURCES_DIR)/agent_door.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_controler.hpp
 $(SOURCES_DIR)/agent_window.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_controler.hpp
+$(SOURCES_DIR)/agent_log_tempature.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent_controler.hpp
 $(SOURCES_DIR)/protocol.o: $(INCLUDES_DIR)/protocol.hpp
 $(SOURCES_DIR)/event.o: $(INCLUDES_DIR)/event.hpp
 $(SOURCES_DIR)/agent_sensor.o: $(INCLUDES_DIR)/protocol.hpp $(INCLUDES_DIR)/event.hpp $(INCLUDES_DIR)/agent.hpp

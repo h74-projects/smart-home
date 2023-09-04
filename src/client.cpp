@@ -5,6 +5,7 @@ namespace sb {
 Client::Client(boost::asio::io_context& io_context, const tcp::resolver::results_type& endpoints)
 : m_io_context(io_context)
 , m_socket(io_context)
+, m_data{}
 {
     do_connect(endpoints);
 }
@@ -51,6 +52,7 @@ void Client::do_read_body()
         if (!ec){
             std::cout.write(m_read_event.body(), m_read_event.body_length());
             std::cout << "\n";
+            m_data = m_read_event.body();
             do_read_header();
         }else{
             m_socket.close();
@@ -72,6 +74,11 @@ void Client::do_write()
             m_socket.close();
         }
     });
+}
+
+std::string Client::data() 
+{
+    return m_data;
 }
 
 } // namespace sb

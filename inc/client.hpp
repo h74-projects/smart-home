@@ -9,6 +9,7 @@
 #include <deque>
 #include <iostream>
 #include <thread>
+#include <string>
 
 using boost::asio::ip::tcp;
 
@@ -23,6 +24,7 @@ public:
   void write(const Protocol& msg);
   void close();
   void do_read_header();
+  std::string data();
   
 private:
   void do_connect(const tcp::resolver::results_type& endpoints);
@@ -34,6 +36,8 @@ private:
   tcp::socket m_socket;
   Protocol m_read_event;
   Events m_events;
+  std::string m_data;
+
 };
 
 } // namespcae sb
