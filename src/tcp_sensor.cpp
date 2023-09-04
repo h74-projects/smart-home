@@ -2,6 +2,8 @@
 #include <iostream>
 #include <thread> //sleep_for
 #include <chrono> 
+#include <random> // random_device
+#include <cassert>
 
 #include "client.hpp"
 #include "protocol.hpp"
@@ -10,31 +12,38 @@
 
 using boost::asio::ip::tcp;
 
-int main(int argc, char* argv[])
+std::string random_temperture(int a_low, int a_high)
+{
+	assert (a_low <= a_high);
+
+	std::random_device rd{};
+    std::mt19937 gen{rd()};
+	std::uniform_int_distribution<> distrib(a_low, a_high);
+
+	return std::to_string(distrib(gen));
+}
+
+int main()
 {
   try
   {
-    if (argc != 2)
-    {
-      std::cerr << "Usage: <port>\n";
-      return 1;
-    }
-
 	boost::asio::io_context io_context;
 	tcp::resolver resolver(io_context);
-	auto endpoints = resolver.resolve("", argv[1]);
+	auto endpoints = resolver.resolve("", "7070");
 	sb::Client c(io_context, endpoints);
-	std::thread t([&io_context](){ io_context.run(); });//join?
+	std::thread t([&io_context](){ io_context.run(); }); //join?
 
-	std::string data = "40"; //TODO change to return randoms numbers
-	std::string id_and_data = "100" + data; //id must to be 3 bytes
-	sb::Protocol msg;
-	msg.body_length(id_and_data.size());
-	std::memcpy(msg.body(), id_and_data.c_str(), msg.body_length());
-	msg.encode_header();
 	
 
 	while(true){
+		std::string data = random_temperture(20 ,35);
+		std::cout << data << '\n';
+		std::string id_and_data = "100" + data; //id must to be 3 bytes
+		sb::Protocol msg;
+		msg.body_length(id_and_data.size());
+		std::memcpy(msg.body(), id_and_data.c_str(), msg.body_length());
+		msg.encode_header();
+
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		c.write(msg);
 	}
