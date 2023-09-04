@@ -17,10 +17,11 @@ public:
     AgentTempature(SensorsId& a_sensors_id);
     ~AgentTempature() noexcept = default;
 
-    tcp::endpoint endpoint() const override;
+    unsigned short port() const override;
+    ProtocolType protocol() const override;
 
 private:
-    tcp::endpoint m_endpoint;
+    unsigned short m_port;
 };
 
 extern "C" AgentSensor* create_agent(SensorsId& a_sensors_id) {

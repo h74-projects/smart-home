@@ -16,19 +16,21 @@ public:
 
     ~AgentAc() noexcept = default;
 
-    tcp::endpoint endpoint() const override; //TODO change return by value?
+    unsigned short port() const override;
+    unsigned short sender_port() const override;
+    ProtocolType protocol() const override;
     bool check_event(Protocol const& a_event, Protocol& a_command) override;
     int event_type() const override;
     
 private:
-    tcp::endpoint m_endpoint;
+    unsigned short m_port;
+    unsigned short m_sender_port;
     int m_event_type;
 };
 
 extern "C" AgentControler* create_agent() {
     return new AgentAc();
 }
-
 
 }//namespace sb
 

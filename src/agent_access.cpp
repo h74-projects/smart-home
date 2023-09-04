@@ -6,13 +6,18 @@ namespace sb {
 
 AgentAccess::AgentAccess(SensorsId& a_sensors_id)
 : AgentSensor(a_sensors_id)
-, m_endpoint(tcp::v4(), 6060)
+, m_port(6060)
 {
 }
 
-tcp::endpoint AgentAccess::endpoint() const
+unsigned short AgentAccess::port() const
 {
-    return m_endpoint;
+    return m_port;
+}
+
+ProtocolType AgentAccess::protocol() const 
+{
+	return ProtocolType::TCP;
 }
 
 }// namespace sb

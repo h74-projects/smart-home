@@ -17,10 +17,11 @@ public:
     AgentAccess(SensorsId& a_sensors_id);
     ~AgentAccess() noexcept = default;
 
-    tcp::endpoint endpoint() const override;
+    uint16_t port() const override;
+    ProtocolType protocol() const override;
 
 private:
-    tcp::endpoint m_endpoint;
+    uint16_t m_port;
 };
 
 extern "C" AgentSensor* create_agent(SensorsId& a_sensors_id) {

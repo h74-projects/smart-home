@@ -8,33 +8,52 @@
 namespace sb {
 
 AgentDoor::AgentDoor()
-: m_endpoint(tcp::v4(), 9090)
+: m_port(9090)
+, m_sender_port(0)
 , m_event_type(2)
 {
 }
 
-tcp::endpoint AgentDoor::endpoint() const 
+unsigned short AgentDoor::port() const 
 {
-	return m_endpoint;
+	return m_port;
+}
+
+unsigned short AgentDoor::sender_port() const 
+{
+	return m_sender_port;
 }
 
 bool AgentDoor::check_event(Protocol const& a_event, Protocol& a_command)
 {
+	static bool locked = true;
+
 	std::cout << "agent_ac:event.data()" << a_event.event_data() << '\n';
-	char command[] = "open door";
+	char open[] = "open door";
+	char lock[] = "lock door";
+	char wrong[] = "incorrect password";
 	
-	if(a_event.event_data() == "open"){
-		a_command.body_length(std::strlen(command));
-		std::memcpy(a_command.body(), command, a_command.body_length());
+	if(a_event.event_data() == "1234"){
+		a_command.body_length(std::strlen(locked ? open : lock));
+		std::memcpy(a_command.body(), locked ? open : lock, a_command.body_length());
 		a_command.encode_header();
-		return true;
+		locked = !locked;
+	} else {
+		a_command.body_length(std::strlen(wrong));
+		std::memcpy(a_command.body(), wrong, a_command.body_length());
+		a_command.encode_header();
 	}
-	return false;
+	return true;
 }
 
 int AgentDoor::event_type() const
 {
     return m_event_type;
+}
+
+ProtocolType AgentDoor::protocol() const 
+{
+	return ProtocolType::TCP;
 }
 
 }// amespace sb
