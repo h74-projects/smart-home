@@ -7,11 +7,16 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
+enum class ProtocolType {   UDP,
+                            TCP
+                        };
+
 class Agent {
 public:
     virtual ~Agent() = default;
     
-    virtual tcp::endpoint endpoint() const = 0;
+    virtual unsigned short port() const = 0;
+    virtual ProtocolType protocol() const = 0;
 
 protected:
     Agent() = default;

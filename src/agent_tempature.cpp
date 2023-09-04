@@ -6,13 +6,18 @@ namespace sb {
 
 AgentTempature::AgentTempature(SensorsId& a_sensors_id)
 : AgentSensor(a_sensors_id)
-, m_endpoint(tcp::v4(), 7070)
+, m_port(7070)
 {
 }
 
-tcp::endpoint AgentTempature::endpoint() const
+unsigned short AgentTempature::port() const
 {
-    return m_endpoint;
+    return m_port;
+}
+
+ProtocolType AgentTempature::protocol() const 
+{
+	return ProtocolType::UDP;
 }
 
 }// namespace sb

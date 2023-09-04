@@ -8,19 +8,24 @@
 namespace sb {
 
 AgentAc::AgentAc()
-: m_endpoint(tcp::v4(), 8080)
+: m_port(0)
+, m_sender_port(8080)
 , m_event_type(1)
 {
 }
 
-tcp::endpoint AgentAc::endpoint() const 
+unsigned short AgentAc::port() const 
 {
-	return m_endpoint;
+	return m_port;
+}
+
+unsigned short AgentAc::sender_port() const 
+{
+	return m_sender_port;
 }
 
 bool AgentAc::check_event(Protocol const& a_event, Protocol& a_command)
 {
-	std::cout << "agent_ac:event.data()" << a_event.event_data() << '\n';
 	char command[] = "turn on";
 	
 	if(a_event.event_data() == "40"){
@@ -35,6 +40,11 @@ bool AgentAc::check_event(Protocol const& a_event, Protocol& a_command)
 int AgentAc::event_type() const
 {
     return m_event_type;
+}
+
+ProtocolType AgentAc::protocol() const 
+{
+	return ProtocolType::UDP;
 }
 
 }// amespace sb

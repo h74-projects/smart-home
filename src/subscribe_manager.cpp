@@ -5,12 +5,18 @@
 
 namespace sb {
 
+SubscribeManager::SubscribeManager()
+{
+    m_event_type["1"] = "TEMPATURE_EVENT";
+    m_event_type["2"] = "ACCESS_DOOR_EVENT";
+}
+
 void SubscribeManager::join(SubscriberPtr a_subscriber)
 {
     std::string type(std::to_string(a_subscriber->event_type()));
     if (type != "") {
         m_subscriber_clan[type].push_back(a_subscriber);
-        std::cout << "sm: " <<"subscribed to " << type << "\n";
+        std::cout <<"subscribed to " << m_event_type[type] << "\n";
     }
 }
 
@@ -27,9 +33,7 @@ void SubscribeManager::deliver(Protocol const& a_event)
 
     for (auto subscriber : m_subscriber_clan[type]) {
         Protocol command;
-        if(subscriber->signal_controler(a_event, command)){ // TODO do deliver inside agent
-            std::cout <<"sm: " <<  command.data();
-            std::cout <<"sm: " << a_event.data();
+        if(subscriber->signal_controler(a_event, command)){ 
             subscriber->deliver(command);
         }
     }

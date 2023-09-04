@@ -16,7 +16,8 @@ class AgentSensor : public Agent{
 public:
     virtual ~AgentSensor() = default;
     
-    virtual tcp::endpoint endpoint() const = 0;
+    virtual unsigned short port() const = 0;
+    virtual ProtocolType protocol() const = 0;
 
     AgentSensor(SensorsId& a_sensors_id);
 

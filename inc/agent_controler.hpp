@@ -14,7 +14,10 @@ class AgentControler : public Agent{
 public:
     virtual ~AgentControler() = default;
     
-    virtual tcp::endpoint endpoint() const = 0;
+    virtual unsigned short port() const = 0;
+    virtual unsigned short sender_port() const = 0;
+    virtual ProtocolType protocol() const = 0;
+
     virtual bool check_event(Protocol const& a_event, Protocol& a_command) = 0;
     virtual int event_type() const = 0;
 

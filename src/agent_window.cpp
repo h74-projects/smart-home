@@ -8,19 +8,24 @@
 namespace sb {
 
 AgentWindow::AgentWindow()
-: m_endpoint(tcp::v4(), 9595)
+: m_port(9595)
+, m_sender_port(0)
 , m_event_type(1)
 {
 }
 
-tcp::endpoint AgentWindow::endpoint() const 
+unsigned short AgentWindow::port() const 
 {
-	return m_endpoint;
+	return m_port;
+}
+
+unsigned short AgentWindow::sender_port() const 
+{
+	return m_sender_port;
 }
 
 bool AgentWindow::check_event(Protocol const& a_event, Protocol& a_command)
 {
-	std::cout << "agent_ac:event.data()" << a_event.event_data() << '\n';
 	char command[] = "close window";
 	
 	if(a_event.event_data() == "40"){
@@ -35,6 +40,11 @@ bool AgentWindow::check_event(Protocol const& a_event, Protocol& a_command)
 int AgentWindow::event_type() const
 {
     return m_event_type;
+}
+
+ProtocolType AgentWindow::protocol() const 
+{
+	return ProtocolType::TCP;
 }
 
 }// amespace sb

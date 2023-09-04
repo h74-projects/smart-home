@@ -18,7 +18,7 @@ typedef std::shared_ptr<Subscriber> SubscriberPtr;
 
 class SubscribeManager {
 public:
-    SubscribeManager() noexcept = default;
+    explicit SubscribeManager();
 
     ~SubscribeManager() noexcept = default;
 
@@ -28,6 +28,7 @@ public:
 
 private:
     std::map<std::string, std::vector<SubscriberPtr>> m_subscriber_clan;
+    std::map<std::string, std::string> m_event_type;
 };
 
 }//namespace sb

@@ -35,6 +35,8 @@ door_agent: $(TARGET_DOOR_CONTROLER)
 
 window_agent: $(TARGET_WINDOW_CONTROLER)
 
+all: tempature_agent access_agent ac_agent door_agent window_agent
+
 $(TARGET_TEMPATURE_SENSOR): $(OBJS_TEMPATURE_SENSOR) 
 	$(CC) $(CXXFLAGS) -shared -o $(TARGET_TEMPATURE_SENSOR) $(OBJS_TEMPATURE_SENSOR)
 

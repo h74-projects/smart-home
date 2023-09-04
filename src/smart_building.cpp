@@ -1,6 +1,8 @@
 #include "smart_building.hpp"
+#include "udp_server.hpp"
 #include "server.hpp"
 #include "subscribe_manager.hpp"
+#include "session_udp.hpp"
 
 #include <exception>
 #include <memory> //unique_ptr
@@ -13,6 +15,7 @@
 #include <boost/asio.hpp>
 
 using boost::asio::ip::tcp;
+using boost::asio::ip::udp;
 
 namespace sb {
 
@@ -22,19 +25,28 @@ void SmartBuilding::run()
     load_controlers_agents_type("../../assets/types_controlers.dat");
     load_sensors("../../assets/sensor_id.dat");
 
-    std::list<Server> servers;
+    std::list<UdpServer> udp_servers;
+    std::list<Server> tcp_servers;
     boost::asio::io_context io_context;
 
     try{
         SubscribeManager sm;
         for(auto sensors_type : m_sensors_per_type){
             std::unique_ptr<AgentSensor> agent_ptr(make_agent<create_agent_func>(sensors_type.first, m_sensor_agents)(m_sensors_per_type[sensors_type.first])); //null check?
-            servers.emplace_back(io_context, std::move(agent_ptr), true, sm);
+            if(agent_ptr->protocol() == ProtocolType::TCP){
+                tcp_servers.emplace_back(io_context, std::move(agent_ptr), true, sm);
+            }else{
+                udp_servers.emplace_back(io_context, std::move(agent_ptr), true, sm);
+            }
         }
 
         for(auto controler_type : m_controler_agents){
             std::unique_ptr<AgentControler> agent_controler_ptr(make_agent<create_agent_controler_func>(controler_type.first, m_controler_agents)()); 
-            servers.emplace_back(io_context, std::move(agent_controler_ptr), false, sm);
+            if(agent_controler_ptr->protocol() == ProtocolType::TCP){
+                tcp_servers.emplace_back(io_context, std::move(agent_controler_ptr), false, sm);
+            }else{
+                udp_servers.emplace_back(io_context, std::move(agent_controler_ptr), false, sm);
+            }
         }
         
         io_context.run();
