@@ -9,6 +9,7 @@ SubscribeManager::SubscribeManager()
 {
     m_event_type["1"] = "TEMPATURE_EVENT";
     m_event_type["2"] = "ACCESS_DOOR_EVENT";
+    m_event_type["3"] = "BOILER_EVENT";
 }
 
 void SubscribeManager::join(SubscriberPtr a_subscriber)
