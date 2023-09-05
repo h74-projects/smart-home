@@ -1,5 +1,5 @@
-#ifndef AGENT_AC_HPP
-#define AGENT_AC_HPP
+#ifndef AGENT_BOILER_HPP
+#define AGENT_BOILER_HPP
 
 #include "protocol.hpp"
 #include "agent_controler.hpp"
@@ -10,11 +10,11 @@ using boost::asio::ip::tcp;
 
 namespace sb {
 
-class AgentAc : public AgentControler{
+class AgentBoiler : public AgentControler{
 public: 
-    AgentAc();
+    AgentBoiler();
 
-    ~AgentAc() noexcept = default;
+    ~AgentBoiler() noexcept = default;
 
     unsigned short port() const override;
     unsigned short sender_port() const override;
@@ -29,9 +29,9 @@ private:
 };
 
 extern "C" AgentControler* create_agent() {
-    return new AgentAc();
+    return new AgentBoiler();
 }
 
 }//namespace sb
 
-#endif // AGENT_AC_HPP
+#endif // AGENT_BOILER_HPP

@@ -10,12 +10,15 @@
 using boost::asio::ip::udp;
 
 
-int main()
+int main(int argc, char* argv[])
 {
 	try{
-
+	
+		if(argc != 2){
+			return 0;
+		}
 		boost::asio::io_context io_context;
-		udp::socket s(io_context, udp::endpoint(udp::v4(), 8080));
+		udp::socket s(io_context, udp::endpoint(udp::v4(), std::atoi(argv[1])));
 		std::thread t([&io_context](){ io_context.run(); });
 		sb::Protocol msg;
     	udp::endpoint sender_endpoint;

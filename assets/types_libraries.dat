@@ -1,4 +1,5 @@
 {
 	"1" : "../libraries/libagent_tempature.so",
-	"2" : "../libraries/libagent_access.so"
+	"2" : "../libraries/libagent_access.so",
+	"3" : "../libraries/libagent_hot_water.so"
 }

@@ -2,5 +2,6 @@
 	"1" : "../libraries/libagent_ac.so",
 	"2" : "../libraries/libagent_door.so",
 	"3" : "../libraries/libagent_window.so",
-	"4" : "../libraries/libagent_log.so"
+	"4" : "../libraries/libagent_log.so",
+	"5" : "../libraries/libagent_boiler.so"
 }

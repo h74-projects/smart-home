@@ -1,5 +1,5 @@
-#ifndef AGENT_TEMPATURE_HPP
-#define AGENT_TEMPATURE_HPP
+#ifndef AGENT_HOTWATER_HPP
+#define AGENT_HOTWATER_HPP
 
 #include "protocol.hpp"
 #include "agent_sensor.hpp"
@@ -12,10 +12,10 @@
 using boost::asio::ip::tcp;
 namespace sb {
 
-class AgentTempature : public AgentSensor{
+class AgentHotWater : public AgentSensor{
 public: 
-    AgentTempature(SensorsId& a_sensors_id);
-    ~AgentTempature() noexcept = default;
+    AgentHotWater(SensorsId& a_sensors_id);
+    ~AgentHotWater() noexcept = default;
 
     unsigned short port() const override;
     ProtocolType protocol() const override;
@@ -25,9 +25,9 @@ private:
 };
 
 extern "C" AgentSensor* create_agent(SensorsId& a_sensors_id) {
-    return new AgentTempature(a_sensors_id);
+    return new AgentHotWater(a_sensors_id);
 }
 
 }//namespace sb
 
-#endif // AGENT_TEMPATURE_HPP
+#endif // AGENT_HOTWATER_HPP
