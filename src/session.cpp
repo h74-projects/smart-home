@@ -9,7 +9,6 @@ Session::Session(tcp::socket a_socket, SubscribeManager& a_subscribtion_manager,
                 bool a_type)
 : m_socket(std::move(a_socket))
 , m_subscription_manager(a_subscribtion_manager)
-, m_subscription{}
 , m_type{a_type}
 , m_agent(std::move(a_agent))
 {

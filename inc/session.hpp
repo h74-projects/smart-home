@@ -40,7 +40,6 @@ private:
     SubscribeManager& m_subscription_manager;
     Protocol m_incoming_event;
     event_queue m_events;
-    std::vector<int> m_subscription;
     bool m_type;
     std::unique_ptr<Agent> m_agent;
 };
